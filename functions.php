@@ -11,9 +11,16 @@ function js_web_theme_styles() {
     wp_enqueue_style(
         'js-web-style',
         get_stylesheet_uri(),
-        array('js-web-inter'),
-        wp_get_theme()->get('Version')
+        array( 'js-web-inter' ),
+        wp_get_theme()->get( 'Version' )
+    );
+
+    wp_enqueue_style(
+        'js-web-experience-timeline',
+        get_template_directory_uri() . '/css/components/experience-timeline.css',
+        array( 'js-web-style' ),
+        wp_get_theme()->get( 'Version' )
     );
 }
 
-add_action('wp_enqueue_scripts', 'js_web_theme_styles');
+add_action( 'wp_enqueue_scripts', 'js_web_theme_styles' );

@@ -1,0 +1,32 @@
+.experience-timeline {
+  --timeline-gutter: 2rem;
+  --timeline-axis: 0.5rem;
+
+  padding-left: var(--timeline-gutter) !important;
+
+background:
+  linear-gradient(var(--color-muted), var(--color-muted))
+  calc(var(--timeline-axis) - 0.5px) 0.75rem
+  / 1px calc(100% - 1.5rem)
+  no-repeat;}
+
+.experience-item > h3 {
+  position: relative;
+}
+
+/* Timeline dot */
+.experience-item > h3::before {
+  content: "";
+  position: absolute;
+
+  top: .77em;
+  left: calc(var(--timeline-axis) - var(--timeline-gutter));
+
+  width: 10px;
+  height: 10px;
+
+  transform: translate(-50%, -50%);
+
+  background: var(--color-dark);
+  border-radius: 50%;
+}

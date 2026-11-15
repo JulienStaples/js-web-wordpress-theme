@@ -25,6 +25,9 @@
 
   /* Layout */
   --page-gutter: 1rem;
+
+  /* UI */
+--radius-sm: 0.25rem;
 }
 
 *,
@@ -60,4 +63,40 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+/* Buttons */
+button,
+.e-button-base {
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
+
+  font-size: var(--text-small);
+  font-weight: 600;
+  line-height: 1.25rem;
+
+  color: var(--color-light) !important;
+  background-color: var(--color-dark) !important;
+
+  border: 2px solid var(--color-dark) !important;
+  border-radius: var(--radius-sm) !important;
+
+  cursor: pointer;
+  text-decoration: none;
+
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+button:hover,
+.e-button-base:hover {
+  color: var(--color-dark) !important;
+  background-color: var(--color-light) !important;
+}
+
+button:focus-visible,
+.e-button-base:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
 }

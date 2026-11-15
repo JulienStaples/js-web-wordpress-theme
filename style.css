@@ -24,6 +24,7 @@
   --space-7: 6rem;
 
   /* Layout */
+  --page-max: 100rem;
   --page-gutter: 1rem;
 
   /* UI */
@@ -99,4 +100,12 @@ button:focus-visible,
 .e-button-base:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 4px;
+}
+
+.js-section {
+  width: calc(100% - (var(--page-gutter) * 2)) !important;
+  max-width: var(--page-max) !important;
+  margin-inline: auto !important;
+  padding: 0px !important;
+  gap: var(--space-3)
 }

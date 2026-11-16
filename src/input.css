@@ -61,6 +61,18 @@
   .section {
     @apply mx-auto flex w-full max-w-page flex-col gap-12 px-4 py-9 sm:px-6 md:py-12 lg:px-8;
   }
+
+  .marquee-viewport {
+    --fade-width: max(0px, calc((100% - var(--container-page)) / 2));
+
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black var(--fade-width),
+      black calc(100% - var(--fade-width)),
+      transparent
+    );
+  }
 }
 
 html {

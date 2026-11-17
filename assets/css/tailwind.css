@@ -6,6 +6,7 @@
     --font-sans: "Inter", sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-black: #000;
     --spacing: 0.25rem;
     --container-lg: 32rem;
     --container-2xl: 42rem;
@@ -545,6 +546,42 @@
   .bg-light {
     background-color: var(--color-light);
   }
+  .bg-muted {
+    background-color: var(--color-muted);
+  }
+  .bg-muted-light {
+    background-color: var(--color-muted-light);
+  }
+  .bg-muted-light\/5 {
+    background-color: color-mix(in srgb, #d5d5d5 5%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-muted-light) 5%, transparent);
+    }
+  }
+  .bg-muted-light\/10 {
+    background-color: color-mix(in srgb, #d5d5d5 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-muted-light) 10%, transparent);
+    }
+  }
+  .bg-muted-light\/50 {
+    background-color: color-mix(in srgb, #d5d5d5 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-muted-light) 50%, transparent);
+    }
+  }
+  .bg-muted-light\/90 {
+    background-color: color-mix(in srgb, #d5d5d5 90%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-muted-light) 90%, transparent);
+    }
+  }
+  .bg-muted\/10 {
+    background-color: color-mix(in srgb, #777777 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-muted) 10%, transparent);
+    }
+  }
   .object-cover {
     object-fit: cover;
   }
@@ -640,6 +677,9 @@
   }
   .text-\[\#666666\] {
     color: #666666;
+  }
+  .text-black {
+    color: var(--color-black);
   }
   .text-dark {
     color: var(--color-dark);

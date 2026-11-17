@@ -67,6 +67,8 @@
     </div>
 </footer>
 
+<?php get_template_part( 'components/scroll-to-top' ); ?>
+
 <script>
     const copyEmailButton = document.querySelector('#copy-email');
     const copyEmailLabel = document.querySelector('#copy-email-label');

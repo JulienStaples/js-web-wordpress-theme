@@ -2,23 +2,81 @@
 
 <main>
 
-    <section class="bg-dark">
-        <h1></h1>
-        <h2></h2>
-        <p></p>
-        <?php
-        get_template_part(
-            'components/button',
-            null,
-            [
-                'text' => 'View my projects',
-                'url'  => home_url('/projects/'),
-                'variant' => 'light'
-            ]
-        );
-        ?>
+    <section class="bg-dark text-light">
+        <div class="section gap-8 md:flex-row md:items-center lg:gap-14 lg:py-16">
+
+            <div class="flex min-w-0 flex-1 flex-col items-start gap-8 lg:gap-10">
+                <div class="inline-flex items-center gap-2 rounded-full bg-dark-surface px-3 py-2">
+                    <?php
+                    echo wp_get_attachment_image(
+                        14,
+                        'thumbnail',
+                        false,
+                        [
+                            'class' => 'size-7 shrink-0 rounded-full object-cover',
+                            'alt' => '',
+                        ]
+                    );
+                    ?>
+
+                    <p class="text-xs text-muted-light">
+                        Hey, nice to meet you.
+                    </p>
+                </div>
+
+
+                <div class="flex flex-col gap-3">
+                    <h1 class="tracking-tight">
+                        I build websites. And keep them working.
+                    </h1>
+
+                    <p class="max-w-lg text-sm text-muted-light lg:text-base">
+                        Most of my professional work is in WordPress.
+                        I use front-end code when a site needs something custom.
+                    </p>
+                </div>
+
+                <?php
+                get_template_part(
+                    'components/button',
+                    null,
+                    [
+                        'text' => 'View my projects',
+                        'url' => home_url( '/projects/' ),
+                        'variant' => 'light',
+                    ]
+                );
+                ?>
+            </div>
+
+            <div
+                class="hidden shrink-0 overflow-hidden rounded-lg bg-[#454545] md:block md:h-[305px] md:w-[245px] lg:h-[455px] lg:w-[390px]">
+                <?php
+                echo wp_get_attachment_image(
+                    14,
+                    'full',
+                    false,
+                    [
+                        'class' => 'h-full w-full object-cover',
+                        'loading' => 'eager',
+                        'fetchpriority' => 'high',
+                    ]
+                );
+                ?>
+            </div>
+        </div>
     </section>
 
+    <?php get_template_part( 'components/homepage/marquee' ); ?>
+
+    <?php get_template_part( 'components/homepage/ne6' ); ?>
+
+    <?php get_template_part( 'components/homepage/projects' ); ?>
+
+    <?php get_template_part( 'components/homepage/tools' ); ?>
+
+    <?php get_template_part( 'components/homepage/experience' ); ?>
+    </div>
 </main>
 
 <?php get_footer(); ?>

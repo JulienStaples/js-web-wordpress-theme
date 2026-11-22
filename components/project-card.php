@@ -1,47 +1,94 @@
 <?php
-$title = $args['title'] ?? '';
-$subtitle = $args['subtitle'] ?? '';
-$description = $args['description'] ?? '';
-$image_url = $args['image_url'] ?? '';
-$url = $args['url'] ?? '';
-$link_text = $args['link_text'] ?? 'Visit website';
+$project = $args['project'] ?? [];
+$active = $args['active'] ?? false;
+$position = $args['position'] ?? 'before';
+
+if ( empty( $project ) ) {
+    return;
+}
 ?>
 
-<article
-    class="grid min-w-0 grid-rows-[auto_auto_1fr_auto] gap-3 rounded-lg border border-border p-3 md:grid-cols-[16rem_minmax(0,1fr)] md:grid-rows-[auto_1fr_auto] md:gap-x-5 md:p-4 lg:grid-cols-1 lg:grid-rows-[auto_auto_1fr_auto] lg:p-3">
+<button type="button" data-project-selector="<?php echo esc_attr( $project['id'] ); ?>"
+    aria-controls="portfolio-panel-<?php echo esc_attr( $project['id'] ); ?>"
+    aria-pressed="<?php echo $active ? 'true' : 'false'; ?>"
+    class="group flex h-full w-full min-w-0 cursor-pointer flex-col gap-3 rounded-lg border border-border bg-white p-2 text-left text-dark transition-colors hover:border-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark aria-pressed:border-dashed aria-pressed:border-muted aria-pressed:bg-transparent motion-reduce:transition-none sm:p-3">
 
-    <div class="md:col-start-2 md:row-start-1 lg:col-auto lg:row-auto">
-        <h3><?php echo esc_html( $title ); ?></h3>
-        <p class="text-sm text-muted">
-            <?php echo esc_html( $subtitle ); ?>
-        </p>
-    </div>
+    <span class="relative block aspect-video w-full overflow-hidden rounded-md bg-border group-aria-pressed:hidden">
 
-    <?php if ( $image_url ) : ?>
-        <div class="overflow-hidden rounded-md md:col-start-1 md:row-span-3 md:row-start-1 lg:col-auto lg:row-auto">
-            <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( 'Screenshot of ' . $title ); ?>"
-                class="aspect-video w-full object-cover object-top" loading="lazy">
-        </div>
+        <?php if ( $project['image_url'] ) : ?>
+
+            <img src="<?php echo esc_url( $project['image_url'] ); ?>" alt="" class="h-full w-full object-cover object-top"
+                loading="lazy">
+
+        <?php else : ?>
+
+            <span class="flex h-full items-center justify-center text-xs text-muted">
+                Preview
+            </span>
+
+        <?php endif; ?>
+
+    </span>
+
+    <span
+        class="hidden aspect-video w-full flex-col items-center justify-center gap-2 rounded-md border border-dashed border-muted text-muted group-aria-pressed:flex">
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3" />
+            <path d="M16 3h3a2 2 0 0 1 2 2v3" />
+            <path d="M21 16v3a2 2 0 0 1-2 2h-3" />
+            <path d="M8 21H5a2 2 0 0 1-2-2v-3" />
+        </svg>
+
+        <span class="text-xs">Expanded</span>
+
+    </span>
+
+    <span class="flex flex-1 flex-col gap-1">
+
+        <span class="text-sm font-semibold sm:text-base">
+            <?php echo esc_html( $project['title'] ); ?>
+        </span>
+
+        <span class="text-xs text-dark/75 sm:text-sm">
+            <?php echo esc_html( $project['subtitle'] ); ?>
+        </span>
+
+    </span>
+
+    <?php if ( ! empty( $project['technologies'] ) ) : ?>
+
+        <span class="border-t border-border pt-2 text-xs font-medium text-dark/80">
+            <?php echo esc_html( implode( ' · ', $project['technologies'] ) ); ?>
+        </span>
+
     <?php endif; ?>
 
-    <p class="text-sm md:col-start-2 md:row-start-2 lg:col-auto lg:row-auto">
-        <?php echo esc_html( $description ); ?>
-    </p>
+    <span class="flex items-center justify-between gap-2 text-xs text-dark/75">
 
-    <?php if ( $url ) : ?>
-        <div class="md:col-start-2 md:row-start-3 lg:col-auto lg:row-auto">
-            <?php
-            get_template_part(
-                'components/button',
-                null,
-                [
-                    'text' => $link_text,
-                    'url' => $url,
-                    'variant' => 'dark',
-                ]
-            );
-            ?>
-        </div>
-    <?php endif; ?>
+        <span class="group-aria-pressed:hidden">
+            View project
+        </span>
 
-</article>
+        <span class="hidden font-medium group-aria-pressed:inline">
+            Currently viewing
+        </span>
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" class="size-4 shrink-0 group-aria-pressed:hidden
+                <?php echo 'before' === $position ? '-rotate-90 lg:rotate-180' : 'rotate-90 lg:rotate-0'; ?>"
+            aria-hidden="true">
+            <path d="m12 19-7-7 7-7" />
+            <path d="M5 12h14" />
+        </svg>
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" class="hidden size-4 shrink-0 group-aria-pressed:block"
+            aria-hidden="true">
+            <path d="m5 12 4 4L19 6" />
+        </svg>
+
+    </span>
+
+</button>

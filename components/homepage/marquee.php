@@ -1,5 +1,5 @@
 <!-- Technology Marquee -->
-<div class="border-t border-border-dark bg-dark text-light">
+<div class="border-t border-b border-border-dark bg-dark text-light">
     <div class="marquee-viewport mx-auto w-full max-w-[calc(var(--container-page)+8rem)] overflow-hidden">
         <div class="section py-3">
             <div class="flex w-max items-center gap-5 whitespace-nowrap text-sm">

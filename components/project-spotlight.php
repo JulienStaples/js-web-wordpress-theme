@@ -29,17 +29,17 @@ $tabs = [
                 <?php echo esc_html( $project['title'] ); ?>
             </h3>
 
-            <p class="text-sm text-muted-light">
+            <p class="text-sm text-dark/75">
                 <?php echo esc_html( $project['description'] ); ?>
             </p>
 
         </div>
 
-        <div class="flex flex-col gap-3 border-y border-border-dark py-4">
+        <div class="flex flex-col gap-3 border-y border-border py-4">
 
             <div class="flex flex-col gap-1">
 
-                <h4 class="text-xs font-medium uppercase tracking-wide text-muted-light">
+                <h4 class="text-xs font-medium uppercase tracking-wide text-dark/70">
                     My Contribution
                 </h4>
 
@@ -55,7 +55,7 @@ $tabs = [
 
                     <?php foreach ( $project['technologies'] as $technology ) : ?>
 
-                        <span class="rounded-md border border-border-dark bg-dark-surface px-2.5 py-1 text-xs">
+                        <span class="rounded-md border border-border bg-border/60 px-2.5 py-1 text-xs">
                             <?php echo esc_html( $technology ); ?>
                         </span>
 
@@ -67,7 +67,7 @@ $tabs = [
 
         </div>
 
-        <div role="tablist" aria-label="Project details" class="grid grid-cols-3 gap-1 rounded-lg bg-dark-surface p-1">
+        <div role="tablist" aria-label="Project details" class="grid grid-cols-3 gap-1 rounded-lg bg-border/60 p-1">
 
             <?php foreach ( $tabs as $key => $label ) : ?>
 
@@ -76,7 +76,7 @@ $tabs = [
                     aria-controls="<?php echo esc_attr( $id . '-content-' . $key ); ?>"
                     aria-selected="<?php echo 'preview' === $key ? 'true' : 'false'; ?>"
                     tabindex="<?php echo 'preview' === $key ? '0' : '-1'; ?>"
-                    class="cursor-pointer rounded-md px-2 py-2.5 text-xs font-medium text-muted-light hover:text-light focus-visible:outline-2 focus-visible:outline-light aria-selected:bg-light aria-selected:text-dark sm:text-sm">
+                    class="cursor-pointer rounded-md px-2 py-2.5 text-xs font-medium text-dark/75 hover:bg-white hover:text-dark focus-visible:outline-2 focus-visible:outline-dark aria-selected:bg-dark aria-selected:text-light aria-selected:hover:bg-dark aria-selected:hover:text-light sm:text-sm">
                     <?php echo esc_html( $label ); ?>
                 </button>
 
@@ -92,17 +92,17 @@ $tabs = [
 
                 <div class="flex flex-wrap items-center justify-between gap-2">
 
-                    <span class="text-xs text-muted-light">
+                    <span class="text-xs text-dark/75">
                         Project Preview
                     </span>
 
-                    <div class="flex gap-1 rounded-md bg-dark-surface p-1">
+                    <div class="flex gap-1 rounded-md bg-border/60 p-1">
 
                         <?php foreach ( [ 'desktop' => 'Desktop', 'mobile' => 'Mobile' ] as $device => $label ) : ?>
 
                             <button type="button" data-preview-toggle="<?php echo esc_attr( $device ); ?>"
                                 aria-pressed="<?php echo 'desktop' === $device ? 'true' : 'false'; ?>"
-                                class="cursor-pointer rounded px-2.5 py-1.5 text-xs text-muted-light aria-pressed:bg-light aria-pressed:text-dark focus-visible:outline-2 focus-visible:outline-light">
+                                class="cursor-pointer rounded px-2.5 py-1.5 text-xs text-dark/75 hover:bg-white hover:text-dark aria-pressed:bg-dark aria-pressed:text-light aria-pressed:hover:bg-dark aria-pressed:hover:text-light focus-visible:outline-2 focus-visible:outline-dark">
                                 <?php echo esc_html( $label ); ?>
                             </button>
 
@@ -112,7 +112,7 @@ $tabs = [
 
                 </div>
 
-                <div class="rounded-lg bg-dark-surface p-2 sm:p-3">
+                <div class="rounded-lg bg-border/40 p-2 sm:p-3">
 
                     <?php
                     $previews = [
@@ -128,7 +128,7 @@ $tabs = [
                             <?php endif; ?>
                             >
 
-                            <div class="mx-auto overflow-hidden rounded-md border border-border-dark bg-dark
+                            <div class="mx-auto overflow-hidden rounded-md border border-border bg-white
                                 <?php echo 'mobile' === $device ? 'max-w-44' : 'w-full'; ?>">
 
                                 <div class="flex items-center gap-1.5 bg-light px-3 py-2">
@@ -151,7 +151,7 @@ $tabs = [
 
                                 <?php else : ?>
 
-                                    <div class="flex items-center justify-center p-4 text-center text-xs text-muted-light
+                                    <div class="flex items-center justify-center p-4 text-center text-xs text-dark/70
                                         <?php echo 'mobile' === $device ? 'aspect-[9/16]' : 'aspect-video'; ?>">
 
                                         <?php echo esc_html( ucfirst( $device ) ); ?> screenshot placeholder
@@ -183,12 +183,12 @@ $tabs = [
                 <?php foreach ( $project['features'] as $title => $description ) : ?>
 
                     <details name="<?php echo esc_attr( $id . '-features' ); ?>"
-                        class="group rounded-lg border border-border-dark bg-dark-surface" <?php if ( 0 === $feature_index++ ) : ?>open
+                        class="group rounded-lg border border-border bg-white" <?php if ( 0 === $feature_index++ ) : ?>open
                         <?php endif; ?>
                         >
 
                         <summary
-                            class="flex cursor-pointer list-none items-center justify-between gap-3 p-3 text-sm font-medium focus-visible:outline-2 focus-visible:outline-light">
+                            class="flex cursor-pointer list-none items-center justify-between gap-3 p-3 text-sm font-medium focus-visible:outline-2 focus-visible:outline-dark">
 
                             <?php echo esc_html( $title ); ?>
 
@@ -201,14 +201,14 @@ $tabs = [
 
                         </summary>
 
-                        <div class="flex flex-col gap-3 border-t border-border-dark p-3">
+                        <div class="flex flex-col gap-3 border-t border-border p-3">
 
-                            <p class="text-sm text-muted-light">
+                            <p class="text-sm text-dark/75">
                                 <?php echo esc_html( $description ); ?>
                             </p>
 
                             <div
-                                class="flex min-h-32 items-center justify-center rounded-md border border-dashed border-border-dark bg-dark p-4 text-center text-xs text-muted-light">
+                                class="flex min-h-32 items-center justify-center rounded-md border border-dashed border-border bg-light p-4 text-center text-xs text-dark/70">
 
                                 Feature demonstration placeholder
 
@@ -229,7 +229,7 @@ $tabs = [
             hidden>
 
             <div
-                class="divide-y divide-border-dark overflow-hidden rounded-lg border border-border-dark bg-dark-surface">
+                class="divide-y divide-border overflow-hidden rounded-lg border border-border bg-white">
 
                 <?php foreach ( $project['build'] as $title => $description ) : ?>
 
@@ -239,7 +239,7 @@ $tabs = [
                             <?php echo esc_html( $title ); ?>
                         </h4>
 
-                        <p class="text-sm text-muted-light">
+                        <p class="text-sm text-dark/75">
                             <?php echo esc_html( $description ); ?>
                         </p>
 
@@ -253,10 +253,10 @@ $tabs = [
 
         <?php if ( ! empty( $project['url'] ) ) : ?>
 
-            <div class="border-t border-border-dark pt-4">
+            <div class="border-t border-border pt-4">
 
                 <a href="<?php echo esc_url( $project['url'] ); ?>"
-                    class="inline-flex items-center gap-3 rounded-md bg-light px-4 py-2.5 text-sm font-medium text-dark hover:bg-muted-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light">
+                    class="inline-flex items-center gap-3 rounded-md bg-dark px-4 py-2.5 text-sm font-medium text-light hover:bg-dark-surface hover:text-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark">
 
                     <?php echo esc_html( $project['link_text'] ); ?>
 

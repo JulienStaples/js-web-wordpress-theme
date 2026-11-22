@@ -37,14 +37,26 @@ foreach ( $ne6_gallery as $mode => $screenshots ) {
 }
 ?>
 
-<section id="ne6" aria-labelledby="ne6-heading" class="section lg:pt-28 lg:pb-20">
+<section id="ne6" aria-labelledby="ne6-heading" class="section">
+
+    <?php
+    get_template_part(
+        'components/section-heading',
+        null,
+        [
+            'number' => '01',
+            'title'  => 'Professional Work',
+            'id'     => 'ne6-heading',
+        ]
+    );
+    ?>
 
     <div class="grid gap-8 lg:grid-cols-5 lg:grid-rows-[auto_1fr_auto]">
 
         <div class="flex flex-col gap-3 lg:col-span-2 lg:col-start-4 lg:row-start-1">
-            <h2 id="ne6-heading">Production WebOps at NE6</h2>
+            <h3 class="text-2xl font-medium md:text-3xl">Production WebOps at NE6</h3>
 
-            <p class="text-dark/75">
+            <p class="text-muted-light">
                 I maintain NE6's production WordPress website and
                 build new pages and custom features when needed.
             </p>
@@ -52,7 +64,7 @@ foreach ( $ne6_gallery as $mode => $screenshots ) {
 
         <div
             data-ne6-gallery
-            class="flex min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-white shadow-lg lg:col-span-3 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:min-h-144"
+            class="order-first flex min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-white text-dark shadow-lg lg:order-none lg:col-span-3 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:min-h-144"
         >
 
             <div class="flex items-center gap-4 border-b border-border px-4 py-3" aria-hidden="true">
@@ -191,18 +203,18 @@ foreach ( $ne6_gallery as $mode => $screenshots ) {
 
         </div>
 
-        <div class="overflow-hidden rounded-lg border border-border bg-white shadow-sm lg:col-span-2 lg:col-start-4 lg:row-start-2 lg:self-center">
+        <div class="overflow-hidden rounded-lg border border-border bg-light text-dark shadow-sm lg:col-span-2 lg:col-start-4 lg:row-start-2 lg:self-center">
 
             <div class="border-b border-border p-5">
-                <h3 class="text-base font-semibold">
+                <h4 class="text-base font-semibold">
                     Scope of Work
-                </h3>
+                </h4>
             </div>
 
             <div class="p-5">
-                <h4 class="text-base font-semibold">
+                <h5 class="text-base font-semibold">
                     Website Operations
-                </h4>
+                </h5>
 
                 <p class="mt-2 text-sm text-dark/75">
                     Updates, backups, forms, testing,
@@ -211,9 +223,9 @@ foreach ( $ne6_gallery as $mode => $screenshots ) {
             </div>
 
             <div class="border-t border-border p-5">
-                <h4 class="text-base font-semibold">
+                <h5 class="text-base font-semibold">
                     Front-End Development
-                </h4>
+                </h5>
 
                 <p class="mt-2 text-sm text-dark/75">
                     New pages, responsive layouts, and custom code
@@ -222,9 +234,9 @@ foreach ( $ne6_gallery as $mode => $screenshots ) {
             </div>
 
             <div class="border-t border-border p-5">
-                <h4 class="text-base font-semibold">
+                <h5 class="text-base font-semibold">
                     Accessibility Program
-                </h4>
+                </h5>
 
                 <p class="mt-2 text-sm text-dark/75">
                     Built a seven-page section with its own navigation,
@@ -243,7 +255,7 @@ foreach ( $ne6_gallery as $mode => $screenshots ) {
                 [
                     'text'    => 'Visit NE6 website',
                     'url'     => 'https://llc.ne6.us/',
-                    'variant' => 'dark',
+                    'variant' => 'light',
                 ]
             );
             ?>

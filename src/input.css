@@ -20,7 +20,7 @@
 /* Global defaults */
 @layer base {
   body {
-    @apply bg-light font-sans text-base font-normal text-dark;
+    @apply bg-dark font-sans text-base font-normal text-light;
   }
 
   h1 {
@@ -58,8 +58,34 @@
 }
 
 @layer components {
+  /* Shared layout for all site sections.
+     Two adjacent sections contribute 24px + 24px on mobile and
+     40px + 40px on desktop, yielding 48px / 80px of separation.
+     The direct heading-to-content gap is 24px / 32px. */
   .section {
-    @apply mx-auto flex w-full max-w-page flex-col gap-12 px-4 py-9 sm:px-6 md:py-12 lg:px-8;
+    @apply mx-auto flex w-full max-w-page flex-col gap-6 px-4 py-6 sm:px-6 lg:gap-8 lg:px-8 lg:py-10;
+  }
+
+  /* Shared numbered section heading: 01 | PROFESSIONAL WORK --- */
+  .homepage-section-heading {
+    @apply flex min-w-0 items-center gap-3;
+  }
+
+  .homepage-section-heading::after {
+    content: "";
+    @apply h-px min-w-0 flex-1 bg-border-dark;
+  }
+
+  .homepage-section-heading h2 {
+    @apply flex min-w-0 items-center gap-3 text-sm font-semibold uppercase tracking-wide text-light;
+  }
+
+  .homepage-section-number {
+    @apply shrink-0 text-muted-light;
+  }
+
+  .homepage-section-divider {
+    @apply h-5 w-px shrink-0 bg-border-dark;
   }
 
   .marquee-viewport {

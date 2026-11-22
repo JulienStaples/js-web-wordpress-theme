@@ -1,8 +1,8 @@
 <?php get_header(); ?>
 
-<main>
+<main id="main-content">
 
-    <section class="bg-dark text-light">
+    <section>
         <div class="section gap-8 md:flex-row md:items-center lg:gap-14 lg:py-16">
 
             <div class="flex min-w-0 flex-1 flex-col items-start gap-8 lg:gap-10">
@@ -42,7 +42,7 @@
                     null,
                     [
                         'text' => 'View my projects',
-                        'url' => home_url( '/projects/' ),
+                        'url' => '#projects',
                         'variant' => 'light',
                     ]
                 );
@@ -76,7 +76,6 @@
     <?php get_template_part( 'components/homepage/tools' ); ?>
 
     <?php get_template_part( 'components/homepage/experience' ); ?>
-    </div>
 </main>
 
 <?php get_footer(); ?>

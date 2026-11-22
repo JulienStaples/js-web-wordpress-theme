@@ -103,13 +103,19 @@ $projects = [
 $active_project = 'language-app';
 ?>
 
-<section id="projects" aria-labelledby="projects-heading" class="section gap-6">
+<section id="projects" aria-labelledby="projects-heading" class="section">
 
-    <div class="flex items-center gap-6">
-        <h2 id="projects-heading">Portfolio</h2>
-
-        <hr class="h-px min-w-0 flex-1 border-0 bg-border" aria-hidden="true">
-    </div>
+    <?php
+    get_template_part(
+        'components/section-heading',
+        null,
+        [
+            'number' => '02',
+            'title' => 'Portfolio',
+            'id' => 'projects-heading',
+        ]
+    );
+    ?>
 
     <div
         class="grid grid-cols-2 gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)_minmax(0,1fr)] lg:grid-rows-2 lg:gap-4">
@@ -136,7 +142,7 @@ $active_project = 'language-app';
         <?php endforeach; ?>
 
         <div id="project-spotlight"
-            class="col-span-2 min-w-0 overflow-hidden rounded-lg bg-dark text-light lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+            class="col-span-2 min-w-0 overflow-hidden rounded-lg bg-light text-dark lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1">
 
             <?php foreach ( $projects as $project ) : ?>
 

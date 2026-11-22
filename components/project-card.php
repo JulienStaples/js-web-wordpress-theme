@@ -11,9 +11,9 @@ if ( empty( $project ) ) {
 <button type="button" data-project-selector="<?php echo esc_attr( $project['id'] ); ?>"
     aria-controls="portfolio-panel-<?php echo esc_attr( $project['id'] ); ?>"
     aria-pressed="<?php echo $active ? 'true' : 'false'; ?>"
-    class="group flex h-full w-full min-w-0 cursor-pointer flex-col gap-3 rounded-lg border border-border bg-white p-2 text-left text-dark transition-colors hover:border-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark aria-pressed:border-dashed aria-pressed:border-muted aria-pressed:bg-transparent motion-reduce:transition-none sm:p-3">
+    class="group flex h-full w-full min-w-0 cursor-pointer flex-col gap-3 rounded-lg border border-border-dark bg-dark-surface p-2 text-left text-light transition-colors hover:border-muted-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light aria-pressed:border-dashed aria-pressed:border-muted-light motion-reduce:transition-none sm:p-3">
 
-    <span class="relative block aspect-video w-full overflow-hidden rounded-md bg-border group-aria-pressed:hidden">
+    <span class="relative block aspect-video w-full overflow-hidden rounded-md bg-dark group-aria-pressed:hidden">
 
         <?php if ( $project['image_url'] ) : ?>
 
@@ -22,7 +22,7 @@ if ( empty( $project ) ) {
 
         <?php else : ?>
 
-            <span class="flex h-full items-center justify-center text-xs text-muted">
+            <span class="flex h-full items-center justify-center text-xs text-muted-light">
                 Preview
             </span>
 
@@ -31,7 +31,7 @@ if ( empty( $project ) ) {
     </span>
 
     <span
-        class="hidden aspect-video w-full flex-col items-center justify-center gap-2 rounded-md border border-dashed border-muted text-muted group-aria-pressed:flex">
+        class="hidden aspect-video w-full flex-col items-center justify-center gap-2 rounded-md border border-dashed border-muted-light text-muted-light group-aria-pressed:flex">
 
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
             stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true">
@@ -51,7 +51,7 @@ if ( empty( $project ) ) {
             <?php echo esc_html( $project['title'] ); ?>
         </span>
 
-        <span class="text-xs text-dark/75 sm:text-sm">
+        <span class="text-xs text-muted-light sm:text-sm">
             <?php echo esc_html( $project['subtitle'] ); ?>
         </span>
 
@@ -59,13 +59,13 @@ if ( empty( $project ) ) {
 
     <?php if ( ! empty( $project['technologies'] ) ) : ?>
 
-        <span class="border-t border-border pt-2 text-xs font-medium text-dark/80">
+        <span class="border-t border-border-dark pt-2 text-xs font-medium text-muted-light">
             <?php echo esc_html( implode( ' · ', $project['technologies'] ) ); ?>
         </span>
 
     <?php endif; ?>
 
-    <span class="flex items-center justify-between gap-2 text-xs text-dark/75">
+    <span class="flex items-center justify-between gap-2 text-xs text-muted-light">
 
         <span class="group-aria-pressed:hidden">
             View project

@@ -29,6 +29,7 @@
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
+    --font-weight-bold: 700;
     --tracking-tight: -0.025em;
     --tracking-wide: 0.025em;
     --leading-relaxed: 1.625;
@@ -279,6 +280,9 @@
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
+  .mt-auto {
+    margin-top: auto;
+  }
   .ml-1 {
     margin-left: var(--spacing);
   }
@@ -355,6 +359,9 @@
   .h-2\.5 {
     height: calc(var(--spacing) * 2.5);
   }
+  .h-5 {
+    height: calc(var(--spacing) * 5);
+  }
   .h-full {
     height: 100%;
   }
@@ -366,9 +373,6 @@
   }
   .min-h-12 {
     min-height: calc(var(--spacing) * 12);
-  }
-  .min-h-32 {
-    min-height: calc(var(--spacing) * 32);
   }
   .min-h-48 {
     min-height: calc(var(--spacing) * 48);
@@ -396,6 +400,9 @@
   }
   .max-w-lg {
     max-width: var(--container-lg);
+  }
+  .max-w-prose {
+    max-width: 65ch;
   }
   .min-w-0 {
     min-width: 0px;
@@ -488,16 +495,6 @@
   }
   .gap-8 {
     gap: calc(var(--spacing) * 8);
-  }
-  :where(.divide-y > :not(:last-child)) {
-    --tw-divide-y-reverse: 0;
-    border-bottom-style: var(--tw-border-style);
-    border-top-style: var(--tw-border-style);
-    border-top-width: calc(1px * var(--tw-divide-y-reverse));
-    border-bottom-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
-  }
-  :where(.divide-border > :not(:last-child)) {
-    border-color: var(--color-border);
   }
   .self-start {
     align-self: flex-start;
@@ -709,9 +706,20 @@
     font-size: var(--text-xs);
     line-height: var(--tw-leading, var(--text-xs--line-height));
   }
+  .text-\[11px\] {
+    font-size: 11px;
+  }
+  .leading-7 {
+    --tw-leading: calc(var(--spacing) * 7);
+    line-height: calc(var(--spacing) * 7);
+  }
   .leading-relaxed {
     --tw-leading: var(--leading-relaxed);
     line-height: var(--leading-relaxed);
+  }
+  .font-bold {
+    --tw-font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-bold);
   }
   .font-medium {
     --tw-font-weight: var(--font-weight-medium);
@@ -724,10 +732,6 @@
   .tracking-tight {
     --tw-tracking: var(--tracking-tight);
     letter-spacing: var(--tracking-tight);
-  }
-  .tracking-wide {
-    --tw-tracking: var(--tracking-wide);
-    letter-spacing: var(--tracking-wide);
   }
   .whitespace-nowrap {
     white-space: nowrap;
@@ -753,12 +757,6 @@
       color: color-mix(in oklab, var(--color-dark) 75%, transparent);
     }
   }
-  .text-dark\/80 {
-    color: color-mix(in srgb, #171717 80%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      color: color-mix(in oklab, var(--color-dark) 80%, transparent);
-    }
-  }
   .text-light {
     color: var(--color-light);
   }
@@ -773,9 +771,6 @@
     @supports (color: color-mix(in lab, red, red)) {
       color: color-mix(in oklab, var(--color-muted-light) 80%, transparent);
     }
-  }
-  .uppercase {
-    text-transform: uppercase;
   }
   .no-underline {
     text-decoration-line: none;
@@ -832,9 +827,6 @@
   }
   :is(:where(.group):is([open], :popover-open, :open) .group-open\:rotate-90) {
     rotate: 90deg;
-  }
-  :is(:where(.group):is([open], :popover-open, :open) .group-open\:rotate-180) {
-    rotate: 180deg;
   }
   :is(:where(.group):is([open], :popover-open, :open) .group-open\:opacity-0) {
     opacity: 0%;
@@ -1244,7 +1236,7 @@
     flex-direction: column;
     gap: calc(var(--spacing) * 6);
     padding-inline: calc(var(--spacing) * 4);
-    padding-block: calc(var(--spacing) * 6);
+    padding-block: calc(var(--spacing) * 8);
     @media (width >= 40rem) {
       padding-inline: calc(var(--spacing) * 6);
     }
@@ -1255,7 +1247,21 @@
       padding-inline: calc(var(--spacing) * 8);
     }
     @media (width >= 64rem) {
-      padding-block: calc(var(--spacing) * 10);
+      padding-block: calc(var(--spacing) * 12);
+    }
+  }
+  #main-content > #ne6 {
+    padding-top: 4.25rem;
+  }
+  #footer > .section {
+    padding-top: 3rem;
+  }
+  @media (min-width: 64rem) {
+    #main-content > #ne6 {
+      padding-top: 6.25rem;
+    }
+    #footer > .section {
+      padding-top: 4rem;
     }
   }
   .homepage-section-heading {
@@ -1320,11 +1326,6 @@ html {
   initial-value: 0;
 }
 @property --tw-translate-z {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0;
-}
-@property --tw-divide-y-reverse {
   syntax: "*";
   inherits: false;
   initial-value: 0;
@@ -1431,7 +1432,6 @@ html {
       --tw-translate-x: 0;
       --tw-translate-y: 0;
       --tw-translate-z: 0;
-      --tw-divide-y-reverse: 0;
       --tw-border-style: solid;
       --tw-leading: initial;
       --tw-font-weight: initial;

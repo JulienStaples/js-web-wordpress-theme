@@ -58,12 +58,36 @@
 }
 
 @layer components {
-  /* Shared layout for all site sections.
-     Two adjacent sections contribute 24px + 24px on mobile and
-     40px + 40px on desktop, yielding 48px / 80px of separation.
-     The direct heading-to-content gap is 24px / 32px. */
+  /* Shared site-wide section rhythm.
+     Adjacent sections: 32px + 32px = 64px (mobile);
+     48px + 48px = 96px (desktop).
+     Heading-to-content remains 24px / 32px. */
   .section {
-    @apply mx-auto flex w-full max-w-page flex-col gap-6 px-4 py-6 sm:px-6 lg:gap-8 lg:px-8 lg:py-10;
+    @apply mx-auto flex w-full max-w-page flex-col gap-6 px-4 py-8 sm:px-6 lg:gap-8 lg:px-8 lg:py-12;
+  }
+
+  /* The marquee stays visually connected to the hero. Its own
+     .section py-3 stays compact. Give the first content section
+     more space after the marquee: 12 + 68 = 80px mobile and
+     12 + 100 = 112px desktop. */
+  #main-content > #ne6 {
+    padding-top: 4.25rem;
+  }
+
+  /* Experience-to-contact transition: 32 + 48 = 80px mobile;
+     48 + 64 = 112px desktop. Applied to the shared site footer. */
+  #footer > .section {
+    padding-top: 3rem;
+  }
+
+  @media (min-width: 64rem) {
+    #main-content > #ne6 {
+      padding-top: 6.25rem;
+    }
+
+    #footer > .section {
+      padding-top: 4rem;
+    }
   }
 
   /* Shared numbered section heading: 01 | PROFESSIONAL WORK --- */

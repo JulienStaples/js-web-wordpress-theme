@@ -3,26 +3,36 @@
 $ne6_gallery = [
     'desktop' => [
         [
-            'file'  => 'assets/imgs/ne6.png',
+            'file'  => 'assets/imgs/ne6-home-desktop.png',
             'label' => 'Homepage',
             'alt'   => 'Desktop screenshot of the NE6 homepage',
         ],
         [
-            'file'  => 'assets/imgs/ne6-accessibility.png',
-            'label' => 'Accessibility Program',
-            'alt'   => 'Desktop screenshot of the NE6 Accessibility Program',
+            'file'  => 'assets/imgs/ne6-blog-desktop.png',
+            'label' => 'NE6 Blog',
+            'alt'   => 'Desktop screenshot of the NE6 blog and article cards',
+        ],
+        [
+            'file'  => 'assets/imgs/ne6-decision-framework-desktop.png',
+            'label' => 'Decision Framework',
+            'alt'   => 'Desktop screenshot of the NE6 five-question decision framework',
         ],
     ],
     'mobile' => [
         [
-            'file'  => 'assets/imgs/ne6-mobile.png',
+            'file'  => 'assets/imgs/ne6-home-mobile.png',
             'label' => 'Homepage',
             'alt'   => 'Mobile screenshot of the NE6 homepage',
         ],
         [
-            'file'  => 'assets/imgs/ne6-accessibility-mobile.png',
-            'label' => 'Accessibility Program',
-            'alt'   => 'Mobile screenshot of the NE6 Accessibility Program',
+            'file'  => 'assets/imgs/ne6-blog-mobile.png',
+            'label' => 'NE6 Blog',
+            'alt'   => 'Mobile screenshot of the NE6 blog and article cards',
+        ],
+        [
+            'file'  => 'assets/imgs/ne6-decision-framework-mobile.png',
+            'label' => 'Decision Framework',
+            'alt'   => 'Mobile screenshot of the NE6 five-question decision framework',
         ],
     ],
 ];

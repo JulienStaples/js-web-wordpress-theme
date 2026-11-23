@@ -8,8 +8,8 @@ $projects = [
         'technologies' => [
             'WordPress',
         ],
-        'image_url' => get_theme_file_uri( 'assets/imgs/ggb.webp' ),
-        'mobile_image_url' => '',
+        'image_url' => get_theme_file_uri( 'assets/imgs/ggb-home-desktop.png' ),
+        'mobile_image_url' => get_theme_file_uri( 'assets/imgs/ggb-home-mobile.png' ),
         'url' => 'https://ggbenterprises.org/',
         'link_text' => 'Visit website',
         'highlights' => [
@@ -24,8 +24,8 @@ $projects = [
         'subtitle' => 'Mobile bartending website',
         'description' => 'I built a website presenting mobile bartending services, packages, and a path toward booking.',
         'technologies' => [],
-        'image_url' => get_theme_file_uri( 'assets/imgs/sipndrift.webp' ),
-        'mobile_image_url' => '',
+        'image_url' => get_theme_file_uri( 'assets/imgs/sipdrift-home-desktop.png' ),
+        'mobile_image_url' => get_theme_file_uri( 'assets/imgs/sipdrift-home-mobile.png' ),
         'url' => 'https://sipdrift.shop/',
         'link_text' => 'Visit website',
         'highlights' => [
@@ -45,8 +45,8 @@ $projects = [
             'TypeScript',
             'Tailwind CSS',
         ],
-        'image_url' => get_theme_file_uri( 'assets/imgs/lang-app.webp' ),
-        'mobile_image_url' => '',
+        'image_url' => get_theme_file_uri( 'assets/imgs/lang-demo-french-desktop.png' ),
+        'mobile_image_url' => get_theme_file_uri( 'assets/imgs/lang-demo-french-mobile.png' ),
         'url' => 'https://github.com/JulienStaples/lang-demo',
         'link_text' => 'View source on GitHub',
         'highlights' => [

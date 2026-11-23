@@ -23,11 +23,10 @@ $tabs = [
 ?>
 
 <article id="portfolio-panel-<?php echo esc_attr( $id ); ?>" data-project-panel="<?php echo esc_attr( $id ); ?>"
-    aria-labelledby="portfolio-heading-<?php echo esc_attr( $id ); ?>" <?php if ( ! $active ) : ?>hidden
-    <?php endif; ?>
-    >
+    aria-labelledby="portfolio-heading-<?php echo esc_attr( $id ); ?>" class="h-full" <?php if ( ! $active ) : ?>hidden
+    <?php endif; ?>>
 
-    <div class="flex flex-col gap-4 p-4 sm:p-5">
+    <div class="flex h-full flex-col gap-4 p-4 sm:p-5">
 
         <div class="flex flex-col gap-2">
 
@@ -106,9 +105,7 @@ $tabs = [
                     <?php foreach ( $previews as $device => $image_url ) : ?>
 
                         <div data-preview-view="<?php echo esc_attr( $device ); ?>" <?php if ( 'mobile' === $device ) : ?>
-                                hidden
-                            <?php endif; ?>
-                            >
+                                hidden <?php endif; ?>>
 
                             <div class="mx-auto overflow-hidden rounded-md border border-border bg-white
                                 <?php echo 'mobile' === $device ? 'max-w-44' : 'w-full'; ?>">
@@ -172,10 +169,10 @@ $tabs = [
         </div>
 
         <div role="tabpanel" id="<?php echo esc_attr( $id . '-content-about' ); ?>"
-            aria-labelledby="<?php echo esc_attr( $id . '-tab-about' ); ?>" data-spotlight-content="about"
-            tabindex="0" hidden>
+            aria-labelledby="<?php echo esc_attr( $id . '-tab-about' ); ?>" data-spotlight-content="about" tabindex="0"
+            hidden>
 
-            <p class="py-1 text-sm leading-relaxed text-dark/80">
+            <p class="max-w-prose py-2 text-base leading-7 text-dark">
                 <?php echo esc_html( $project['about'] ); ?>
             </p>
 
@@ -183,7 +180,7 @@ $tabs = [
 
         <?php if ( ! empty( $project['url'] ) ) : ?>
 
-            <div class="border-t border-border pt-4">
+            <div class="mt-auto border-t border-border pt-4">
 
                 <a href="<?php echo esc_url( $project['url'] ); ?>"
                     class="inline-flex items-center gap-3 rounded-md bg-dark px-4 py-2.5 text-sm font-medium text-light hover:bg-dark-surface hover:text-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark">

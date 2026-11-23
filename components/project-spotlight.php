@@ -24,7 +24,8 @@ $tabs = [
 
 <article id="portfolio-panel-<?php echo esc_attr( $id ); ?>" data-project-panel="<?php echo esc_attr( $id ); ?>"
     aria-labelledby="portfolio-heading-<?php echo esc_attr( $id ); ?>" class="h-full" <?php if ( ! $active ) : ?>hidden
-    <?php endif; ?>>
+    <?php endif; ?>
+    >
 
     <div class="flex h-full flex-col gap-4 p-4 sm:p-5">
 
@@ -105,7 +106,9 @@ $tabs = [
                     <?php foreach ( $previews as $device => $image_url ) : ?>
 
                         <div data-preview-view="<?php echo esc_attr( $device ); ?>" <?php if ( 'mobile' === $device ) : ?>
-                                hidden <?php endif; ?>>
+                                hidden
+                            <?php endif; ?>
+                            >
 
                             <div class="mx-auto overflow-hidden rounded-md border border-border bg-white
                                 <?php echo 'mobile' === $device ? 'max-w-44' : 'w-full'; ?>">
@@ -155,22 +158,60 @@ $tabs = [
             aria-labelledby="<?php echo esc_attr( $id . '-tab-highlights' ); ?>" data-spotlight-content="highlights"
             tabindex="0" hidden>
 
-            <ul class="flex flex-col gap-4 py-1">
-                <?php foreach ( $project['highlights'] as $title => $description ) : ?>
+            <?php // Compact highlight cards: the entire summary remains visible without interaction. ?>
+            <ul class="flex flex-col gap-2 py-1">
+                <?php foreach ( ( $project['highlights'] ?? [] ) as $title => $highlight ) : ?>
+                    <?php
+                    // Backward compatible with the existing 'Title' => 'Description' data.
+                    // Later, individual entries can provide optional deeper evidence:
+                    // 'Title' => [ 'summary' => '...', 'details' => [ '...', '...' ] ].
+                    $summary = is_array( $highlight )
+                        ? ( $highlight['summary'] ?? '' )
+                        : $highlight;
+                    $detail_lines = is_array( $highlight ) ? ( $highlight['details'] ?? [] ) : [];
+                    $detail_lines = array_values( array_filter( array_map(
+                        'strval', (array) $detail_lines
+                    ), 'strlen' ) );
+                    $has_details = ! empty( $detail_lines );
+                    ?>
 
-                    <li class="flex flex-col gap-1">
-                        <p class="text-sm font-semibold"><?php echo esc_html( $title ); ?></p>
-                        <p class="text-sm leading-relaxed text-dark/75"><?php echo esc_html( $description ); ?></p>
+                    <li>
+                        <?php if ( $has_details ) : ?>
+                            <details name="portfolio-highlights-<?php echo esc_attr( $id ); ?>" class="group overflow-hidden rounded-md border border-border bg-white open:border-muted">
+                                <summary class="flex min-h-16 cursor-pointer list-none items-start justify-between gap-3 px-3 py-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark [&::-webkit-details-marker]:hidden">
+                                    <span class="flex min-w-0 flex-col gap-1">
+                                        <span class="text-sm font-semibold text-dark"><?php echo esc_html( $title ); ?></span>
+                                        <span class="text-sm leading-5 text-dark/75"><?php echo esc_html( $summary ); ?></span>
+                                    </span>
+                                    <svg class="mt-1 size-4 shrink-0 text-dark/70 transition-transform group-open:rotate-180 motion-reduce:transition-none"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="m6 9 6 6 6-6" />
+                                    </svg>
+                                </summary>
+                                <div class="border-t border-border px-3 py-3">
+                                    <ul class="list-disc space-y-2 pl-4 text-sm leading-6 text-dark/80">
+                                        <?php foreach ( $detail_lines as $line ) : ?>
+                                            <li><?php echo esc_html( $line ); ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            </details>
+                        <?php else : ?>
+                            <div class="flex min-h-16 flex-col justify-center gap-1 rounded-md border border-border bg-white px-3 py-3">
+                                <p class="text-sm font-semibold text-dark"><?php echo esc_html( $title ); ?></p>
+                                <p class="text-sm leading-5 text-dark/75"><?php echo esc_html( $summary ); ?></p>
+                            </div>
+                        <?php endif; ?>
                     </li>
-
                 <?php endforeach; ?>
             </ul>
 
         </div>
 
         <div role="tabpanel" id="<?php echo esc_attr( $id . '-content-about' ); ?>"
-            aria-labelledby="<?php echo esc_attr( $id . '-tab-about' ); ?>" data-spotlight-content="about" tabindex="0"
-            hidden>
+            aria-labelledby="<?php echo esc_attr( $id . '-tab-about' ); ?>" data-spotlight-content="about"
+            tabindex="0" hidden>
 
             <p class="max-w-prose py-2 text-base leading-7 text-dark">
                 <?php echo esc_html( $project['about'] ); ?>
@@ -182,17 +223,17 @@ $tabs = [
 
             <div class="mt-auto border-t border-border pt-4">
 
-                <a href="<?php echo esc_url( $project['url'] ); ?>"
-                    class="inline-flex items-center gap-3 rounded-md bg-dark px-4 py-2.5 text-sm font-medium text-light hover:bg-dark-surface hover:text-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark">
-
-                    <?php echo esc_html( $project['link_text'] ); ?>
-
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" class="size-4" aria-hidden="true">
-                        <path d="M7 17 17 7M7 7h10v10" />
-                    </svg>
-
-                </a>
+                <?php
+                get_template_part(
+                    'components/button',
+                    null,
+                    [
+                        'text'    => $project['link_text'],
+                        'url'     => $project['url'],
+                        'variant' => 'dark',
+                    ]
+                );
+                ?>
 
             </div>
 

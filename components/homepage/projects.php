@@ -13,8 +13,20 @@ $projects = [
         'url' => 'https://ggbenterprises.org/',
         'link_text' => 'Visit website',
         'highlights' => [
-            'Responsive layouts' => 'Website layouts built for desktop and mobile visitors.',
-            'Business presentation' => 'A finished customer-facing website with the company\'s information and content.',
+            'Responsive layouts' => [
+                'summary' => 'Website layouts built for desktop and mobile visitors.',
+                'details' => [
+                    'I handled the responsive page layouts as part of the WordPress build.',
+                    'The same business information is accessible across screen sizes.',
+                ],
+            ],
+            'Business presentation' => [
+                'summary' => 'A finished customer-facing website with the company\'s information and content.',
+                'details' => [
+                    'I organized and set up the company content across the website.',
+                    'I completed the build and launch for the contracting business.',
+                ],
+            ],
         ],
         'about' => 'I built and launched this WordPress website for a small contracting business. I handled the page layouts, content setup, responsive implementation, and delivery, with the goal of presenting the business clearly to customers across different screen sizes.',
     ],
@@ -29,8 +41,20 @@ $projects = [
         'url' => 'https://sipdrift.shop/',
         'link_text' => 'Visit website',
         'highlights' => [
-            'Services and packages' => 'Visitors can explore the mobile bartending services and package offerings.',
-            'Path toward booking' => 'The website helps prospective customers take the next step toward booking.',
+            'Services and packages' => [
+                'summary' => 'Visitors can explore the mobile bartending services and package offerings.',
+                'details' => [
+                    'I structured the site around the business\'s service descriptions and package information.',
+                    'The content presents the offerings together in a customer-facing experience.',
+                ],
+            ],
+            'Path toward booking' => [
+                'summary' => 'The website helps prospective customers take the next step toward booking.',
+                'details' => [
+                    'I organized the content so visitors can understand the services before taking the next step.',
+                    'The project focuses on an understandable path toward booking, rather than a complex application.',
+                ],
+            ],
         ],
         'about' => 'I built the customer-facing website for Sip & Drift, organizing information about mobile bartending services, packages, and booking. The focus was on making the business and its offerings easy to understand and giving interested visitors a clear way to move forward.',
     ],
@@ -50,9 +74,27 @@ $projects = [
         'url' => 'https://github.com/JulienStaples/lang-demo',
         'link_text' => 'View source on GitHub',
         'highlights' => [
-            'Interactive reading' => 'Read and interact with text word by word.',
-            'Vocabulary tracking' => 'Keep track of vocabulary while reading.',
-            'Difficulty ratings' => 'Assign difficulty ratings to individual words.',
+            'Interactive reading' => [
+                'summary' => 'Read and interact with text word by word.',
+                'details' => [
+                    'Word-level interaction is part of the reading interface, rather than a separate tool.',
+                    'The reading experience sits alongside vocabulary and difficulty features.',
+                ],
+            ],
+            'Vocabulary tracking' => [
+                'summary' => 'Keep track of vocabulary while reading.',
+                'details' => [
+                    'I built vocabulary tracking into the same interface used for reading.',
+                    'This connects reading practice with an active vocabulary workflow.',
+                ],
+            ],
+            'Difficulty ratings' => [
+                'summary' => 'Assign difficulty ratings to individual words.',
+                'details' => [
+                    'Ratings apply at the word level rather than to an entire text.',
+                    'Difficulty information works alongside the vocabulary features.',
+                ],
+            ],
         ],
         'about' => 'I built this interactive reading application using Next.js, React, TypeScript, and Tailwind CSS. It combines text interaction, vocabulary tracking, and word difficulty ratings in one interface, turning reading practice into something users can actively work through rather than just view.',
     ],
@@ -72,9 +114,27 @@ $projects = [
         'url' => '',
         'link_text' => '',
         'highlights' => [
-            'Custom WordPress theme' => 'Purpose-built PHP templates and reusable components.',
-            'Interactive project explorer' => 'Switch between projects, screenshots, and details on the homepage.',
-            'Responsive layout' => 'A single design system across desktop and mobile.',
+            'Custom WordPress theme' => [
+                'summary' => 'Purpose-built PHP templates and reusable components.',
+                'details' => [
+                    'I organized homepage sections as reusable WordPress PHP template parts.',
+                    'Tailwind CSS provides shared styling across the custom theme.',
+                ],
+            ],
+            'Interactive project explorer' => [
+                'summary' => 'Switch between projects, screenshots, and details on the homepage.',
+                'details' => [
+                    'Vanilla JavaScript switches the active project and its tabs without a page reload.',
+                    'Each project has separate Preview, Highlights, and About views, with mobile previews where available.',
+                ],
+            ],
+            'Responsive layout' => [
+                'summary' => 'A single design system across desktop and mobile.',
+                'details' => [
+                    'Project selection surrounds the main spotlight on larger screens and reflows on smaller screens.',
+                    'The same shared components and visual rules carry between layouts.',
+                ],
+            ],
         ],
         'about' => 'I built this portfolio as a custom WordPress theme, using reusable PHP template parts and Tailwind CSS for responsive styling. Vanilla JavaScript powers the project spotlight, NE6 screenshot gallery, and expandable capability cards without page reloads. A separate custom WordPress plugin is still in development.',
     ],

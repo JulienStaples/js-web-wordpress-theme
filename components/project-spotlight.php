@@ -8,10 +8,17 @@ if ( empty( $project ) ) {
 
 $id = $project['id'];
 
+// Only offer the mobile view when an actual mobile capture is available.
+$has_mobile_preview = ! empty( $project['mobile_image_url'] );
+$previews = [ 'desktop' => $project['image_url'] ?? '' ];
+if ( $has_mobile_preview ) {
+    $previews['mobile'] = $project['mobile_image_url'];
+}
+
 $tabs = [
     'preview' => 'Preview',
-    'features' => 'Features',
-    'build' => 'The Build',
+    'highlights' => 'Highlights',
+    'about' => 'About',
 ];
 ?>
 
@@ -35,37 +42,21 @@ $tabs = [
 
         </div>
 
-        <div class="flex flex-col gap-3 border-y border-border py-4">
+        <?php if ( ! empty( $project['technologies'] ) ) : ?>
 
-            <div class="flex flex-col gap-1">
+            <ul class="flex flex-wrap gap-2 border-y border-border py-4" aria-label="Technologies used">
 
-                <h4 class="text-xs font-medium uppercase tracking-wide text-dark/70">
-                    My Contribution
-                </h4>
+                <?php foreach ( $project['technologies'] as $technology ) : ?>
 
-                <p class="text-sm">
-                    <?php echo esc_html( $project['contribution'] ); ?>
-                </p>
+                    <li class="rounded-md border border-border bg-border/60 px-2.5 py-1 text-xs">
+                        <?php echo esc_html( $technology ); ?>
+                    </li>
 
-            </div>
+                <?php endforeach; ?>
 
-            <?php if ( ! empty( $project['technologies'] ) ) : ?>
+            </ul>
 
-                <div class="flex flex-wrap gap-2">
-
-                    <?php foreach ( $project['technologies'] as $technology ) : ?>
-
-                        <span class="rounded-md border border-border bg-border/60 px-2.5 py-1 text-xs">
-                            <?php echo esc_html( $technology ); ?>
-                        </span>
-
-                    <?php endforeach; ?>
-
-                </div>
-
-            <?php endif; ?>
-
-        </div>
+        <?php endif; ?>
 
         <div role="tablist" aria-label="Project details" class="grid grid-cols-3 gap-1 rounded-lg bg-border/60 p-1">
 
@@ -90,36 +81,27 @@ $tabs = [
 
             <div class="flex flex-col gap-3">
 
-                <div class="flex flex-wrap items-center justify-between gap-2">
+                <?php if ( $has_mobile_preview ) : ?>
 
-                    <span class="text-xs text-dark/75">
-                        Project Preview
-                    </span>
+                    <div class="flex justify-end">
+                        <div class="flex gap-1 rounded-md bg-border/60 p-1" role="group" aria-label="Screenshot device">
 
-                    <div class="flex gap-1 rounded-md bg-border/60 p-1">
+                            <?php foreach ( [ 'desktop' => 'Desktop', 'mobile' => 'Mobile' ] as $device => $label ) : ?>
 
-                        <?php foreach ( [ 'desktop' => 'Desktop', 'mobile' => 'Mobile' ] as $device => $label ) : ?>
+                                <button type="button" data-preview-toggle="<?php echo esc_attr( $device ); ?>"
+                                    aria-pressed="<?php echo 'desktop' === $device ? 'true' : 'false'; ?>"
+                                    class="cursor-pointer rounded px-2.5 py-1.5 text-xs text-dark/75 hover:bg-white hover:text-dark aria-pressed:bg-dark aria-pressed:text-light aria-pressed:hover:bg-dark aria-pressed:hover:text-light focus-visible:outline-2 focus-visible:outline-dark">
+                                    <?php echo esc_html( $label ); ?>
+                                </button>
 
-                            <button type="button" data-preview-toggle="<?php echo esc_attr( $device ); ?>"
-                                aria-pressed="<?php echo 'desktop' === $device ? 'true' : 'false'; ?>"
-                                class="cursor-pointer rounded px-2.5 py-1.5 text-xs text-dark/75 hover:bg-white hover:text-dark aria-pressed:bg-dark aria-pressed:text-light aria-pressed:hover:bg-dark aria-pressed:hover:text-light focus-visible:outline-2 focus-visible:outline-dark">
-                                <?php echo esc_html( $label ); ?>
-                            </button>
+                            <?php endforeach; ?>
 
-                        <?php endforeach; ?>
-
+                        </div>
                     </div>
 
-                </div>
+                <?php endif; ?>
 
                 <div class="rounded-lg bg-border/40 p-2 sm:p-3">
-
-                    <?php
-                    $previews = [
-                        'desktop' => $project['image_url'],
-                        'mobile' => $project['mobile_image_url'],
-                    ];
-                    ?>
 
                     <?php foreach ( $previews as $device => $image_url ) : ?>
 
@@ -154,7 +136,7 @@ $tabs = [
                                     <div class="flex items-center justify-center p-4 text-center text-xs text-dark/70
                                         <?php echo 'mobile' === $device ? 'aspect-[9/16]' : 'aspect-video'; ?>">
 
-                                        <?php echo esc_html( ucfirst( $device ) ); ?> screenshot placeholder
+                                        Screenshot coming soon
 
                                     </div>
 
@@ -172,82 +154,30 @@ $tabs = [
 
         </div>
 
-        <div role="tabpanel" id="<?php echo esc_attr( $id . '-content-features' ); ?>"
-            aria-labelledby="<?php echo esc_attr( $id . '-tab-features' ); ?>" data-spotlight-content="features"
+        <div role="tabpanel" id="<?php echo esc_attr( $id . '-content-highlights' ); ?>"
+            aria-labelledby="<?php echo esc_attr( $id . '-tab-highlights' ); ?>" data-spotlight-content="highlights"
             tabindex="0" hidden>
 
-            <div class="flex flex-col gap-2">
+            <ul class="flex flex-col gap-4 py-1">
+                <?php foreach ( $project['highlights'] as $title => $description ) : ?>
 
-                <?php $feature_index = 0; ?>
-
-                <?php foreach ( $project['features'] as $title => $description ) : ?>
-
-                    <details name="<?php echo esc_attr( $id . '-features' ); ?>"
-                        class="group rounded-lg border border-border bg-white" <?php if ( 0 === $feature_index++ ) : ?>open
-                        <?php endif; ?>
-                        >
-
-                        <summary
-                            class="flex cursor-pointer list-none items-center justify-between gap-3 p-3 text-sm font-medium focus-visible:outline-2 focus-visible:outline-dark">
-
-                            <?php echo esc_html( $title ); ?>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2"
-                                class="size-4 shrink-0 transition-transform group-open:rotate-180 motion-reduce:transition-none"
-                                aria-hidden="true">
-                                <path d="m6 9 6 6 6-6" />
-                            </svg>
-
-                        </summary>
-
-                        <div class="flex flex-col gap-3 border-t border-border p-3">
-
-                            <p class="text-sm text-dark/75">
-                                <?php echo esc_html( $description ); ?>
-                            </p>
-
-                            <div
-                                class="flex min-h-32 items-center justify-center rounded-md border border-dashed border-border bg-light p-4 text-center text-xs text-dark/70">
-
-                                Feature demonstration placeholder
-
-                            </div>
-
-                        </div>
-
-                    </details>
+                    <li class="flex flex-col gap-1">
+                        <p class="text-sm font-semibold"><?php echo esc_html( $title ); ?></p>
+                        <p class="text-sm leading-relaxed text-dark/75"><?php echo esc_html( $description ); ?></p>
+                    </li>
 
                 <?php endforeach; ?>
-
-            </div>
+            </ul>
 
         </div>
 
-        <div role="tabpanel" id="<?php echo esc_attr( $id . '-content-build' ); ?>"
-            aria-labelledby="<?php echo esc_attr( $id . '-tab-build' ); ?>" data-spotlight-content="build" tabindex="0"
-            hidden>
+        <div role="tabpanel" id="<?php echo esc_attr( $id . '-content-about' ); ?>"
+            aria-labelledby="<?php echo esc_attr( $id . '-tab-about' ); ?>" data-spotlight-content="about"
+            tabindex="0" hidden>
 
-            <div
-                class="divide-y divide-border overflow-hidden rounded-lg border border-border bg-white">
-
-                <?php foreach ( $project['build'] as $title => $description ) : ?>
-
-                    <div class="flex flex-col gap-2 p-4">
-
-                        <h4 class="text-sm font-semibold">
-                            <?php echo esc_html( $title ); ?>
-                        </h4>
-
-                        <p class="text-sm text-dark/75">
-                            <?php echo esc_html( $description ); ?>
-                        </p>
-
-                    </div>
-
-                <?php endforeach; ?>
-
-            </div>
+            <p class="py-1 text-sm leading-relaxed text-dark/80">
+                <?php echo esc_html( $project['about'] ); ?>
+            </p>
 
         </div>
 

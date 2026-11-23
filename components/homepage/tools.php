@@ -5,9 +5,10 @@ $capabilities = [
         'skills' => 'WordPress · Divi · Elementor · content publishing · plugins and forms',
         'description' => 'I build and maintain WordPress websites, from content updates to custom layouts and functionality.',
         'demo' => 'WordPress Page Builder',
-        'logos' => [
-            'https://cdn.simpleicons.org/wordpress/171717',
-            'https://cdn.simpleicons.org/elementor/171717',
+        'icons' => [
+            [ 'type' => 'brand', 'slug' => 'wordpress' ],
+            [ 'type' => 'brand', 'slug' => 'shopify' ],
+            [ 'type' => 'brand', 'slug' => 'squarespace' ],
         ],
     ],
     [
@@ -15,10 +16,10 @@ $capabilities = [
         'skills' => 'HTML · CSS · JavaScript · PHP · responsive implementation',
         'description' => 'I use front-end code to implement responsive designs and build functionality beyond a CMS\'s defaults.',
         'demo' => 'Code to Website',
-        'logos' => [
-            'https://cdn.simpleicons.org/html5/171717',
-            'https://cdn.simpleicons.org/javascript/171717',
-            'https://cdn.simpleicons.org/php/171717',
+        'icons' => [
+            [ 'type' => 'brand', 'slug' => 'html5' ],
+            [ 'type' => 'brand', 'slug' => 'css' ],
+            [ 'type' => 'brand', 'slug' => 'javascript' ],
         ],
     ],
     [
@@ -26,9 +27,10 @@ $capabilities = [
         'skills' => 'GA4 · Google Tag Manager · on-page SEO · accessibility · responsive QA',
         'description' => 'I work with analytics, tracking, testing, and accessibility to improve production websites.',
         'demo' => 'Analytics & QA Dashboard',
-        'logos' => [
-            'https://cdn.simpleicons.org/googleanalytics/171717',
-            'https://cdn.simpleicons.org/googletagmanager/171717',
+        'icons' => [
+            [ 'type' => 'brand', 'slug' => 'googleanalytics' ],
+            [ 'type' => 'brand', 'slug' => 'googletagmanager' ],
+            [ 'type' => 'trending' ],
         ],
     ],
     [
@@ -36,10 +38,12 @@ $capabilities = [
         'skills' => 'React · Next.js · TypeScript · Tailwind CSS · Git/GitHub',
         'description' => 'I also build interactive applications and custom components using modern JavaScript frameworks.',
         'demo' => 'Application Components',
-        'logos' => [
-            'https://cdn.simpleicons.org/react/171717',
-            'https://cdn.simpleicons.org/nextdotjs/171717',
-            'https://cdn.simpleicons.org/typescript/171717',
+        'icons' => [
+            [ 'type' => 'brand', 'slug' => 'react' ],
+            [ 'type' => 'brand', 'slug' => 'nextdotjs' ],
+            [ 'type' => 'brand', 'slug' => 'typescript' ],
+            [ 'type' => 'brand', 'slug' => 'tailwindcss' ],
+            [ 'type' => 'brand', 'slug' => 'github' ],
         ],
     ],
 ];
@@ -85,11 +89,47 @@ $capabilities = [
                                     <?php echo esc_html( $capability['title'] ); ?>
                                 </h3>
 
-                                <div class="flex items-center gap-2" aria-hidden="true">
+                                <div class="flex flex-wrap items-center gap-2" aria-hidden="true">
 
-                                    <?php foreach ( $capability['logos'] as $logo ) : ?>
+                                    <?php foreach ( $capability['icons'] as $icon ) : ?>
 
-                                        <img src="<?php echo esc_url( $logo ); ?>" alt="" class="size-5" loading="lazy">
+                                        <?php if ( 'brand' === $icon['type'] ) : ?>
+
+                                            <img src="<?php echo esc_url( 'https://cdn.simpleicons.org/' . $icon['slug'] . '/171717' ); ?>"
+                                                alt="" class="size-5 shrink-0" loading="lazy">
+
+                                        <?php elseif ( 'word' === $icon['type'] ) : ?>
+
+                                            <span
+                                                class="inline-flex h-5 shrink-0 items-center text-[11px] font-bold tracking-tight text-dark">
+                                                <?php echo esc_html( $icon['text'] ); ?>
+                                            </span>
+
+                                        <?php elseif ( 'responsive' === $icon['type'] ) : ?>
+
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                                                stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 text-dark">
+                                                <rect x="2" y="4" width="14" height="11" rx="1.5" />
+                                                <path d="M7 19h5M9.5 15v4" />
+                                                <rect x="18" y="8" width="4" height="11" rx="1" />
+                                            </svg>
+
+                                        <?php elseif ( 'accessibility' === $icon['type'] ) : ?>
+
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                                                stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 text-dark">
+                                                <circle cx="12" cy="4" r="1.75" fill="currentColor" stroke="none" />
+                                                <path d="M4 8l8 2 8-2M12 10v5m0 0-4 6m4-6 4 6" />
+                                            </svg>
+
+                                        <?php elseif ( 'trending' === $icon['type'] ) : ?>
+
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                                                stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 text-dark">
+                                                <path d="M3 4v16h18M6 16l5-5 3 3 7-8M16 6h5v5" />
+                                            </svg>
+
+                                        <?php endif; ?>
 
                                     <?php endforeach; ?>
 

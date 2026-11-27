@@ -353,6 +353,68 @@ $ne6_work_areas = [
     let mode = slides[0].dataset.ne6Mode;
     let subject = slides[0].dataset.ne6Subject;
 
+    // Screenshot changes only. Device changes keep the shared frame animation.
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const DURATION = 350;
+    const DISTANCE = 24;
+    const OVERSHOOT = 1.5;
+    let running = null;
+
+    function finishScreenshot() {
+        if (running) running.finish();
+    }
+
+    function screenshotFrame(slide) {
+        return slide.dataset.ne6Mode === 'mobile'
+            ? slide.querySelector(':scope > div > div')
+            : slide.querySelector('img');
+    }
+
+    function animateScreenshot(old, incoming, direction) {
+        if (!old || !incoming || old === incoming || motion.matches || !Element.prototype.animate) return;
+        const frame = screenshotFrame(incoming);
+        if (!frame) return;
+        const ghost = old.cloneNode(true);
+        ghost.removeAttribute('data-ne6-slide');
+        ghost.classList.remove('hidden');
+        ghost.setAttribute('data-ne6-transition-ghost', '');
+        ghost.setAttribute('aria-hidden', 'true');
+        ghost.inert = true;
+        Object.assign(ghost.style, {pointerEvents:'none', zIndex:'2'});
+        ghost.querySelectorAll('img').forEach(img => {img.alt = ''; img.loading = 'eager';});
+        if (old.dataset.ne6Mode === 'mobile') ghost.firstElementChild.style.background = 'transparent';
+        const outgoing = screenshotFrame(ghost);
+        if (!outgoing) return;
+        old.parentElement.append(ghost);
+        const d = direction * DISTANCE;
+        const out = outgoing.animate([
+            {opacity:1, transform:'translateX(0)'},
+            {opacity:0, transform:`translateX(${-d * .55}px)`}
+        ], {duration:DURATION * .75, easing:'ease-out', fill:'forwards'});
+        const enter = frame.animate([
+            {opacity:0, transform:`translateX(${d}px)`},
+            {opacity:1, transform:`translateX(${-d * OVERSHOOT * .12}px)`, offset:.72},
+            {opacity:1, transform:'translateX(0)'}
+        ], {duration:DURATION, easing:'cubic-bezier(.22,.75,.3,1)'});
+        const finish = () => {
+            if (running?.finish !== finish) return;
+            running = null;
+            out.cancel(); enter.cancel(); ghost.remove();
+        };
+        running = {finish};
+        enter.onfinish = finish;
+        enter.oncancel = finish;
+    }
+
+    // This template script executes before the shared footer interaction script.
+    // Settle screenshot motion before it samples device geometry on click.
+    document.addEventListener('click', event => {
+        if (event.target.closest('[data-ne6-view],[data-ne6-thumb],[data-ne6-previous],[data-ne6-next]')?.closest('[data-ne6-gallery]') === gallery) finishScreenshot();
+    }, true);
+    window.addEventListener('resize', finishScreenshot);
+    motion.addEventListener?.('change', finishScreenshot);
+
+
     function availableSlides(device = mode) {
         return slides.filter(slide => slide.dataset.ne6Mode === device);
     }
@@ -416,9 +478,16 @@ $ne6_work_areas = [
 
     thumbnails.forEach(thumb => {
         thumb.addEventListener('click', () => {
+            const old = currentSlide();
+            const oldMode = mode;
             mode = thumb.dataset.ne6Mode;
             subject = thumb.dataset.ne6Subject;
+            const incoming = currentSlide();
+            if (old === incoming) return;
+            const order = availableSlides();
+            const direction = order.indexOf(incoming) > order.indexOf(old) ? 1 : -1;
             render();
+            if (oldMode === mode) animateScreenshot(old, incoming, direction);
         });
     });
 
@@ -426,10 +495,12 @@ $ne6_work_areas = [
         const currentSlides = availableSlides();
         if (currentSlides.length < 2) return;
 
-        const index = currentSlides.indexOf(currentSlide());
+        const old = currentSlide();
+        const index = currentSlides.indexOf(old);
         const nextIndex = (index + direction + currentSlides.length) % currentSlides.length;
         subject = currentSlides[nextIndex].dataset.ne6Subject;
         render();
+        animateScreenshot(old, currentSlide(), direction);
     }
 
     previous.addEventListener('click', () => move(-1));

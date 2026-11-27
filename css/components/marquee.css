@@ -1,0 +1,126 @@
+/* The default is a manually scrollable, keyboard-accessible technology list. */
+.technology-marquee {
+    position: relative;
+    isolation: isolate;
+}
+
+.marquee-shell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: calc(var(--container-page) + 8rem);
+    margin-inline: auto;
+    min-height: 48px;
+}
+
+.technology-marquee .marquee-viewport {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    height: 48px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    mask-image: none;
+}
+
+/* Suppress the scrollbar flash before GSAP initializes. Manual scrolling
+   and keyboard access remain available in the static fallback. */
+.technology-marquee .marquee-viewport::-webkit-scrollbar {
+    display: none;
+}
+
+.technology-marquee .section {
+    flex: none;
+    min-height: 0;
+    justify-content: center;
+    padding-block: 0;
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+}
+
+.marquee-unit {
+    flex: none;
+}
+
+.marquee-loop-separator,
+.marquee-fill,
+.marquee-toggle[hidden],
+.marquee-toggle svg[hidden] {
+    display: none;
+}
+
+.technology-marquee.is-animated .marquee-viewport {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black var(--fade-width),
+        black calc(100% - var(--fade-width)), transparent);
+}
+
+.technology-marquee.is-animated .marquee-unit {
+    padding-inline-end: 1.25rem;
+}
+
+.technology-marquee.is-animated .marquee-loop-separator {
+    display: inline;
+}
+
+.technology-marquee.is-animated .marquee-track {
+    will-change: transform;
+}
+
+.technology-marquee.is-filling {
+    background: var(--color-light);
+}
+
+.technology-marquee.is-filling .marquee-fill {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: var(--color-dark);
+    pointer-events: none;
+}
+
+.marquee-toggle {
+    display: grid;
+    place-items: center;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    color: #bdbdbd;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.marquee-toggle:focus-visible,
+.technology-marquee .marquee-viewport:focus-visible {
+    outline: 2px solid var(--color-light);
+    outline-offset: -3px;
+}
+
+.technology-marquee.is-filling .marquee-toggle {
+    visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .technology-marquee:not(.is-animated) .marquee-viewport {
+        display: block;
+        height: auto;
+        overflow: visible;
+    }
+    .technology-marquee:not(.is-animated) .marquee-track,
+    .technology-marquee:not(.is-animated) .marquee-unit {
+        width: 100%;
+    }
+    .technology-marquee:not(.is-animated) .marquee-unit {
+        flex-wrap: wrap;
+        white-space: normal;
+        row-gap: .5rem;
+        padding-block: .75rem;
+    }
+}

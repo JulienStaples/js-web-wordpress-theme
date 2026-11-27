@@ -39,8 +39,8 @@ summary > svg, [data-capability-toggle] > span:first-child > svg {
     position: absolute; z-index: -1; background: #171717; border-radius: 4px; pointer-events: none;
     transition: left var(--motion-return) var(--motion-spring), top var(--motion-return) var(--motion-spring), width var(--motion-return) var(--motion-spring), height var(--motion-return) var(--motion-spring);
 }
-.motion-toggle > :is([data-ne6-view],[data-preview-toggle]) { background: transparent !important; color: #171717 !important; }
-.motion-toggle > :is([data-ne6-view],[data-preview-toggle])[aria-pressed="true"] { color: #f7f7f7 !important; }
+.motion-toggle > :is([data-ne6-view],[data-preview-toggle],[data-spotlight-tab]) { background: transparent !important; color: #171717 !important; }
+.motion-toggle > :is([data-ne6-view],[data-preview-toggle],[data-spotlight-tab]):is([aria-pressed="true"],[aria-selected="true"]) { color: #f7f7f7 !important; }
 /* Both intrinsic preview sizes contribute to the stage height. The inactive
    view is invisible and non-interactive, not a second visible screenshot. */
 .motion-preview-stage { display: grid; align-items: center; position: relative; overflow: hidden; }
@@ -98,7 +98,7 @@ summary > svg, [data-capability-toggle] > span:first-child > svg {
     [data-ne6-thumb]:not(:disabled):not([aria-disabled="true"]):not([aria-pressed="true"]):hover {
         border-color: #777;
     }
-    .motion-toggle > :is([data-ne6-view], [data-preview-toggle]):not(:disabled):not([aria-disabled="true"]):not([aria-pressed="true"]):hover {
+    .motion-toggle > :is([data-ne6-view], [data-preview-toggle], [data-spotlight-tab]):not(:disabled):not([aria-disabled="true"]):not([aria-pressed="true"]):not([aria-selected="true"]):hover {
         background-color: #17171712 !important;
     }
     /* Preserve the active pill and tab colors; only the control itself moves. */
@@ -116,3 +116,31 @@ summary > svg, [data-capability-toggle] > span:first-child > svg {
         transition: none !important;
     }
 }
+
+/* Portfolio shared-element overlay. Real controls retain their dimensions and focus. */
+#projects #project-spotlight { isolation: isolate; }
+#projects:has(.portfolio-swap-traveler) { overflow-anchor: none; }
+#projects #project-spotlight, #projects [data-project-selector] { transition-property: scale, translate, background-color, border-color, color, box-shadow; }
+/* Keep the destination slots visible while the visual copies are in flight.
+   An inset outline does not change geometry or introduce a layout shift. */
+#projects .portfolio-swap-muted {
+    background: transparent !important;
+    border-color: transparent !important;
+    outline: 1px dashed #aaa;
+    outline-offset: -1px;
+    box-shadow: none !important;
+}
+#projects .portfolio-swap-muted > * { visibility: hidden !important; }
+#projects :is(.portfolio-swap-muted, .portfolio-swap-anchor)[data-project-selector] {
+    scale: 1 !important;
+    translate: none !important;
+    transition: none !important;
+}
+#projects .portfolio-swap-anchor[data-project-selector] {
+    border-style: dashed;
+    border-color: #aaa;
+}
+#projects .portfolio-swap-traveler { position: absolute; pointer-events: none; overflow: hidden; border-radius: .5rem; box-shadow: 0 5px 16px #0003; }
+#projects .portfolio-swap-face { position: absolute; inset: 0 auto auto 0; transform-origin: top left; pointer-events: none; }
+#projects .portfolio-swap-face > * { width: 100% !important; height: 100% !important; margin: 0 !important; }
+#projects .portfolio-swap-face * { transition: none !important; animation: none !important; }

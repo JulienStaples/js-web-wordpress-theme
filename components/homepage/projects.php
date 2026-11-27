@@ -182,7 +182,7 @@ $active_project = 'language-app';
         </div>
     </div>
 
-    <div class="grid min-w-0 gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)_minmax(0,1fr)] lg:grid-rows-2 lg:gap-4">
+    <div class="relative grid min-w-0 gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)_minmax(0,1fr)] lg:grid-rows-2 lg:gap-4">
 
         <div id="project-selector" class="-m-1 flex min-w-0 snap-x snap-mandatory gap-3 overflow-x-auto p-1 scroll-px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:contents">
 
@@ -284,7 +284,153 @@ $active_project = 'language-app';
         new ResizeObserver(updateScrollControls).observe(scroller);
         updateScrollControls();
 
-        function selectTab(panel, tabName) {
+        // Shared-element swap: move visual copies while the real controls and
+        // their accessibility state remain in the document. No focus/scroll calls.
+        const spotlight = section.querySelector('#project-spotlight');
+        const swapGrid = spotlight.parentElement;
+        const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+        const SWAP_DURATION = 450;
+        const SWAP_OVERSHOOT = 1.25;
+        let swap = null;
+        let tabAnimation = null;
+        const clamp = n => Math.max(0, Math.min(1, n));
+        const lerp = (a, b, p) => a + (b - a) * p;
+        const smooth = p => { p = clamp(p); return p * p * (3 - 2 * p); };
+        const back = p => 1 + (SWAP_OVERSHOOT + 1) * (p - 1) ** 3 + SWAP_OVERSHOOT * (p - 1) ** 2;
+        const canSwap = () => !motionPreference.matches && typeof Element.prototype.animate === 'function';
+
+        function geometry(element) {
+            const r = element.getBoundingClientRect();
+            const g = swapGrid.getBoundingClientRect();
+            return { x: r.left - g.left, y: r.top - g.top, w: r.width, h: r.height };
+        }
+
+        function snapshot(element, bounds) {
+            const face = document.createElement('div');
+            face.className = 'portfolio-swap-face';
+            Object.assign(face.style, { width: `${bounds.w}px`, height: `${bounds.h}px` });
+            const copy = element.cloneNode(true);
+            [copy, ...copy.querySelectorAll('[id]')].forEach(el => el.removeAttribute('id'));
+            [copy, ...copy.querySelectorAll('img')].forEach(el => {
+                if (el.tagName === 'IMG') { el.loading = 'eager'; el.alt = ''; }
+            });
+            copy.style.setProperty('scale', 'none', 'important');
+            copy.style.setProperty('translate', 'none', 'important');
+            copy.style.setProperty('transition', 'none', 'important');
+            copy.classList.remove('portfolio-swap-muted', 'portfolio-swap-anchor');
+            copy.querySelectorAll('[data-project-panel][hidden]').forEach(el => el.remove());
+            face.append(copy);
+            return face;
+        }
+
+        function traveler(start, end, first, second, z, fadeAtEdge = false) {
+            const layer = document.createElement('div');
+            layer.className = 'portfolio-swap-traveler';
+            layer.style.zIndex = String(z);
+            layer.inert = true;
+            layer.setAttribute('aria-hidden', 'true');
+            layer.append(first, second);
+            swapGrid.append(layer);
+            const firstColor = getComputedStyle(first.firstElementChild).backgroundColor;
+            const secondColor = getComputedStyle(second.firstElementChild).backgroundColor;
+            function draw(p) {
+                const q = back(p);
+                const w = Math.max(1, lerp(start.w, end.w, q));
+                const h = Math.max(1, lerp(start.h, end.h, q));
+                Object.assign(layer.style, {
+                    left: `${lerp(start.x, end.x, q)}px`, top: `${lerp(start.y, end.y, q)}px`,
+                    width: `${w}px`, height: `${h}px`,
+                    opacity: fadeAtEdge ? String(1 - smooth((p - .55) / .45)) : '1',
+                    backgroundColor: `color-mix(in srgb, ${firstColor}, ${secondColor} ${100 * smooth((p - .12) / .34)}%)`
+                });
+                [first, second].forEach((face, index) => {
+                    const base = index ? end : start;
+                    // Uniform scale avoids stretching text and screenshots.
+                    const scale = Math.min(w / base.w, h / base.h);
+                    face.style.transform = `translate(${(w - base.w * scale) / 2}px, ${(h - base.h * scale) / 2}px) scale(${scale})`;
+                });
+                // Short overlap avoids two differently sized text blocks ghosting.
+                first.style.opacity = String(1 - smooth((p - .12) / .17));
+                second.style.opacity = String(smooth((p - .25) / .21));
+            }
+            draw(0);
+            return { layer, draw };
+        }
+
+        function finishSwap() {
+            if (!swap) return;
+            const current = swap;
+            swap = null;
+            cancelAnimationFrame(current.frame);
+            current.tween?.kill();
+            current.travelers.forEach(t => t.layer.remove());
+            current.muted.forEach(el => el.classList.remove('portfolio-swap-muted'));
+            current.anchor.classList.remove('portfolio-swap-anchor');
+        }
+
+        // A card outside the mobile strip cannot be seen at its real position.
+        // Dock at the nearest visible edge and fade out, without scrolling it.
+        function visibleCardDestination(bounds) {
+            if (getComputedStyle(scroller).display === 'contents') return { bounds, fade: false };
+            const r = geometry(scroller);
+            const x = Math.max(r.x, Math.min(bounds.x, r.x + r.w - Math.min(bounds.w, r.w)));
+            return { bounds: { ...bounds, x }, fade: Math.abs(x - bounds.x) > 1 };
+        }
+
+        function animateProjectChange(oldCard, newCard, change) {
+            finishSwap();
+            tabAnimation?.cancel();
+            if (!canSwap() || !oldCard || !newCard) { change(); return; }
+            const fromSpot = geometry(spotlight);
+            const fromCard = geometry(newCard);
+            if (![fromSpot, fromCard].every(r => r.w > 0 && r.h > 0)) { change(); return; }
+            const oldFace = snapshot(spotlight, fromSpot);
+            const newFace = snapshot(newCard, fromCard);
+            change();
+            // Snap indicator geometry to the new project's default controls before cloning.
+            window.jsWebInteractions?.syncToggles?.(spotlight, true);
+            const toSpot = geometry(spotlight);
+            const cardBounds = geometry(oldCard);
+            const destination = visibleCardDestination(cardBounds);
+            const toCard = destination.bounds;
+            if (![toSpot, toCard].every(r => r.w > 0 && r.h > 0)) return;
+            const outgoing = traveler(fromSpot, toCard, oldFace, snapshot(oldCard, cardBounds), 20, destination.fade);
+            const incoming = traveler(fromCard, toSpot, newFace, snapshot(spotlight, toSpot), 21);
+            // Leave the incoming card's real, dashed selected placeholder in place.
+            const muted = [spotlight, oldCard];
+            newCard.classList.add('portfolio-swap-anchor');
+            muted.forEach(el => el.classList.add('portfolio-swap-muted'));
+            const current = { travelers: [outgoing, incoming], muted, anchor: newCard, frame: 0, tween: null };
+            swap = current;
+            const draw = p => current.travelers.forEach(t => t.draw(p));
+            const complete = () => {
+                if (swap !== current) return;
+                finishSwap();
+            };
+            if (window.gsap) {
+                const progress = { value: 0 };
+                current.tween = window.gsap.to(progress, { value: 1, duration: SWAP_DURATION / 1000, ease: 'none', onUpdate: () => draw(progress.value), onComplete: complete });
+            } else {
+                const start = performance.now();
+                const tick = now => {
+                    if (swap !== current) return;
+                    const p = clamp((now - start) / SWAP_DURATION);
+                    draw(p);
+                    if (p < 1) current.frame = requestAnimationFrame(tick);
+                    else complete();
+                };
+                current.frame = requestAnimationFrame(tick);
+            }
+        }
+        window.addEventListener('resize', finishSwap);
+        scroller.addEventListener('scroll', finishSwap, { passive: true });
+        motionPreference.addEventListener?.('change', finishSwap);
+
+        function selectTab(panel, tabName, animate = true) {
+            const tabs = [...panel.querySelectorAll('[data-spotlight-tab]')];
+            const before = tabs.findIndex(button => button.getAttribute('aria-selected') === 'true');
+            const after = tabs.findIndex(button => button.dataset.spotlightTab === tabName);
+            tabAnimation?.cancel();
             panel.querySelectorAll('[data-spotlight-tab]').forEach(button => {
                 const active = button.dataset.spotlightTab === tabName;
 
@@ -298,6 +444,15 @@ $active_project = 'language-app';
 
             const controls = panel.querySelector('[data-preview-controls]');
             if (controls) controls.hidden = tabName !== 'preview';
+            if (animate && before !== after && canSwap()) {
+                const content = panel.querySelector('[data-spotlight-content]:not([hidden])');
+                const direction = after > before ? 1 : -1;
+                if (content) tabAnimation = content.animate([
+                    { transform: `translateX(${7 * direction}px)`, opacity: .9 },
+                    { transform: `translateX(${-1.5 * direction}px)`, opacity: 1, offset: .7 },
+                    { transform: 'translateX(0)', opacity: 1 }
+                ], { duration: 300, easing: 'cubic-bezier(.22,.8,.3,1)' });
+            }
         }
 
         function selectDevice(panel, device) {
@@ -319,24 +474,29 @@ $active_project = 'language-app';
 
             if (!nextPanel || !nextPanel.hidden) return;
 
-            selectors.forEach(button => {
-                const active = button.dataset.projectSelector === projectId;
+            const oldCard = selectors.find(button => button.getAttribute('aria-pressed') === 'true');
+            const newCard = selectors.find(button => button.dataset.projectSelector === projectId);
+            animateProjectChange(oldCard, newCard, () => {
+                selectors.forEach(button => {
+                    const active = button.dataset.projectSelector === projectId;
 
-                button.setAttribute('aria-pressed', String(active));
+                    button.setAttribute('aria-pressed', String(active));
+                });
+
+                panels.forEach(panel => {
+                    panel.hidden = panel !== nextPanel;
+                });
+
+                selectTab(nextPanel, 'preview', false);
+                selectDevice(nextPanel, 'desktop');
             });
-
-            panels.forEach(panel => {
-                panel.hidden = panel !== nextPanel;
-            });
-
-            selectTab(nextPanel, 'preview');
-            selectDevice(nextPanel, 'desktop');
         }
 
         section.addEventListener('click', event => {
             const scrollControl = event.target.closest('[data-project-scroll]');
 
             if (scrollControl) {
+                finishSwap();
                 scrollProjects(scrollControl);
                 return;
             }
@@ -351,6 +511,7 @@ $active_project = 'language-app';
             const panel = event.target.closest('[data-project-panel]');
 
             if (!panel) return;
+            finishSwap();
 
             const tab = event.target.closest('[data-spotlight-tab]');
 
@@ -407,7 +568,7 @@ $active_project = 'language-app';
             const nextTab = tabs[nextIndex];
 
             selectTab(panel, nextTab.dataset.spotlightTab);
-            nextTab.focus();
+            nextTab.focus({ preventScroll: true });
         });
     })();
 </script>

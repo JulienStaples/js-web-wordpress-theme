@@ -131,23 +131,31 @@
     // Selected toggle background slides between the actual button bounds,
     // including when the two controls wrap on very narrow screens.
     const syncToggle = group => {
-        const selected = group.querySelector('[aria-pressed="true"]');
+        const selected = group.querySelector('[aria-pressed="true"], [aria-selected="true"]');
         const indicator = group.querySelector(':scope > .motion-indicator');
         if (!selected || !indicator || !group.getClientRects().length) return;
         if(!selected.offsetWidth || !selected.offsetHeight)return;
         Object.assign(indicator.style,{left:px(selected.offsetLeft),top:px(selected.offsetTop),width:px(selected.offsetWidth),height:px(selected.offsetHeight)});
     };
     const resize = 'ResizeObserver' in window ? new ResizeObserver(entries=>entries.forEach(e=>syncToggle(e.target))) : null;
-    const toggleParents=new Set([...document.querySelectorAll('[data-ne6-view],[data-preview-toggle]')].map(b=>b.parentElement));
+    const toggleParents=new Set([...document.querySelectorAll('[data-ne6-view],[data-preview-toggle],[data-spotlight-tab]')].map(b=>b.parentElement));
     toggleParents.forEach(group => {
         const indicator = document.createElement('span');
         indicator.className='motion-indicator'; indicator.setAttribute('aria-hidden','true');
         indicator.style.transition='none'; group.prepend(indicator); group.classList.add('motion-toggle');
         syncToggle(group); requestAnimationFrame(()=>{indicator.style.transition='';});
         const observer=new MutationObserver(()=>syncToggle(group));
-        group.querySelectorAll('[data-ne6-view],[data-preview-toggle]').forEach(b=>observer.observe(b,{attributes:true,attributeFilter:['aria-pressed']}));
+        group.querySelectorAll('[data-ne6-view],[data-preview-toggle],[data-spotlight-tab]').forEach(b=>observer.observe(b,{attributes:true,attributeFilter:['aria-pressed','aria-selected']}));
         resize?.observe(group); toggleGroups.push(group);
     });
+    window.jsWebInteractions.syncToggles = (root, immediate = false) => {
+        toggleGroups.filter(group => root.contains(group)).forEach(group => {
+            const indicator = group.querySelector(':scope > .motion-indicator');
+            if (immediate) indicator.style.transition = 'none';
+            syncToggle(group);
+            if (immediate) { indicator.getBoundingClientRect(); indicator.style.transition = ''; }
+        });
+    };
     document.querySelectorAll('[data-preview-view]').forEach(view=>view.parentElement.classList.add('motion-preview-stage'));
 
     function currentFrame(root,type) {

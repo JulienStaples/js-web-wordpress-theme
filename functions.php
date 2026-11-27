@@ -1,5 +1,12 @@
 <?php
 
+function js_web_theme_setup()
+{
+    add_theme_support('title-tag');
+}
+
+add_action('after_setup_theme', 'js_web_theme_setup');
+
 function js_web_theme_styles()
 {
     wp_enqueue_style(

@@ -340,7 +340,7 @@ $active_project = 'language-app';
                 const bounds = heading.getBoundingClientRect();
 
                 const header = document.getElementById('site-header');
-                const visibleTop = header ? Math.max(0, header.getBoundingClientRect().bottom) : 0;
+                const visibleTop = header && !header.classList.contains('header-in-flow') ? Math.max(0, header.getBoundingClientRect().bottom) : 0;
 
                 if (bounds.top < visibleTop || bounds.bottom > window.innerHeight) {
                     heading.scrollIntoView({ block: 'center', inline: 'nearest' });

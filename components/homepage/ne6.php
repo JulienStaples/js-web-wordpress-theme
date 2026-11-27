@@ -188,7 +188,7 @@ $ne6_work_areas = [
                         data-ne6-previous
                         aria-label="Previous screenshot"
                         <?php disabled( count( $ne6_gallery[ $ne6_initial_mode ] ) < 2 ); ?>
-                        class="absolute top-1/2 left-3 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-dark bg-dark text-light shadow-sm transition-colors hover:bg-white hover:text-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark disabled:opacity-30 motion-reduce:transition-none"
+                        class="absolute top-1/2 left-3 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-dark bg-dark text-light shadow-sm transition-colors hover:bg-white hover:text-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus-visible:ring-2 focus-visible:ring-dark disabled:opacity-30 motion-reduce:transition-none"
                     >
                         <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M19 12H5m7 7-7-7 7-7" />
@@ -200,7 +200,7 @@ $ne6_work_areas = [
                         data-ne6-next
                         aria-label="Next screenshot"
                         <?php disabled( count( $ne6_gallery[ $ne6_initial_mode ] ) < 2 ); ?>
-                        class="absolute top-1/2 right-3 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-dark bg-dark text-light shadow-sm transition-colors hover:bg-white hover:text-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark disabled:opacity-30 motion-reduce:transition-none"
+                        class="absolute top-1/2 right-3 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-dark bg-dark text-light shadow-sm transition-colors hover:bg-white hover:text-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus-visible:ring-2 focus-visible:ring-dark disabled:opacity-30 motion-reduce:transition-none"
                     >
                         <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M5 12h14m-7-7 7 7-7 7" />
@@ -215,7 +215,7 @@ $ne6_work_areas = [
                 <div class="flex flex-wrap items-center justify-between gap-3 border-t border-border p-3">
 
                     <div
-                        class="inline-flex items-center gap-1 rounded-md bg-light p-1"
+                        class="inline-flex max-w-full flex-wrap items-center gap-1 rounded-md bg-light p-1"
                         role="group"
                         aria-label="Screenshot device"
                     >
@@ -225,7 +225,7 @@ $ne6_work_areas = [
                             data-ne6-view="desktop"
                             aria-pressed="<?php echo 'desktop' === $ne6_initial_mode ? 'true' : 'false'; ?>"
                             <?php disabled( empty( $ne6_gallery['desktop'] ) ); ?>
-                            class="rounded-sm px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-40 <?php echo 'desktop' === $ne6_initial_mode ? 'bg-dark text-light' : 'text-dark'; ?>"
+                            class="min-h-11 rounded-sm px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-40 <?php echo 'desktop' === $ne6_initial_mode ? 'bg-dark text-light' : 'text-dark'; ?>"
                         >
                             Desktop
                         </button>
@@ -235,7 +235,7 @@ $ne6_work_areas = [
                             data-ne6-view="mobile"
                             aria-pressed="<?php echo 'mobile' === $ne6_initial_mode ? 'true' : 'false'; ?>"
                             <?php disabled( empty( $ne6_gallery['mobile'] ) ); ?>
-                            class="rounded-sm px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-40 <?php echo 'mobile' === $ne6_initial_mode ? 'bg-dark text-light' : 'text-dark'; ?>"
+                            class="min-h-11 rounded-sm px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-40 <?php echo 'mobile' === $ne6_initial_mode ? 'bg-dark text-light' : 'text-dark'; ?>"
                         >
                             Mobile
                         </button>

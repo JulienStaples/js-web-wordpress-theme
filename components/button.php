@@ -32,7 +32,7 @@ $is_off_site = ! empty( $destination_host )
 $opens_new_tab = $is_document || $is_off_site;
 $appearance    = $is_document ? ( $args['document_variant'] ?? 'outline' ) : $variant;
 
-$base_classes = 'inline-flex min-h-11 items-center justify-center gap-2.5 rounded-sm border px-4 py-2.5 text-sm font-semibold no-underline transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current motion-reduce:transition-none';
+$base_classes = 'inline-flex min-h-11 min-w-0 max-w-full items-center justify-center gap-2.5 rounded-sm border px-4 py-2.5 text-sm font-semibold no-underline transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#767676] motion-reduce:transition-none';
 
 $appearance_classes = [
     'light'   => 'border-light bg-light text-dark hover:border-light hover:bg-dark hover:text-light',
@@ -46,7 +46,7 @@ $classes = $base_classes . ' ' . ( $appearance_classes[ $appearance ] ?? $appear
 <a href="<?php echo esc_url( $url ); ?>"
     class="<?php echo esc_attr( $classes ); ?>"
     <?php if ( $opens_new_tab ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>>
-    <span><?php echo esc_html( $text ); ?></span>
+    <span class="min-w-0 wrap-anywhere"><?php echo esc_html( $text ); ?></span>
 
     <?php if ( $is_document ) : ?>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"

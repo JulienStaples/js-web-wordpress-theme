@@ -67,7 +67,7 @@ $tabs = [
                     aria-controls="<?php echo esc_attr( $id . '-content-' . $key ); ?>"
                     aria-selected="<?php echo 'preview' === $key ? 'true' : 'false'; ?>"
                     tabindex="<?php echo 'preview' === $key ? '0' : '-1'; ?>"
-                    class="cursor-pointer rounded-md px-2 py-2.5 text-xs font-medium text-dark/75 hover:bg-white hover:text-dark focus-visible:outline-2 focus-visible:outline-dark aria-selected:bg-dark aria-selected:text-light aria-selected:hover:bg-dark aria-selected:hover:text-light sm:text-sm">
+                    class="min-h-11 min-w-0 cursor-pointer rounded-md px-2 py-2.5 text-xs font-medium text-dark/75 hover:bg-white hover:text-dark focus-visible:outline-2 focus-visible:outline-dark aria-selected:bg-dark aria-selected:text-light aria-selected:hover:bg-dark aria-selected:hover:text-light sm:text-sm">
                     <?php echo esc_html( $label ); ?>
                 </button>
 
@@ -77,7 +77,7 @@ $tabs = [
 
         <div role="tabpanel" id="<?php echo esc_attr( $id . '-content-preview' ); ?>"
             aria-labelledby="<?php echo esc_attr( $id . '-tab-preview' ); ?>" data-spotlight-content="preview"
-            tabindex="0">
+            tabindex="0" class="focus-visible:outline-offset-[-2px]">
 
             <div>
 
@@ -144,14 +144,14 @@ $tabs = [
 
         <div role="tabpanel" id="<?php echo esc_attr( $id . '-content-highlights' ); ?>"
             aria-labelledby="<?php echo esc_attr( $id . '-tab-highlights' ); ?>" data-spotlight-content="highlights"
-            tabindex="0" hidden>
+            tabindex="0" class="focus-visible:outline-offset-[-2px]" hidden>
 
             <ul class="flex flex-col gap-2 py-1">
                 <?php foreach ( $project['highlights'] as $title => $highlight ) : ?>
                     <li>
                         <details name="portfolio-highlights-<?php echo esc_attr( $id ); ?>" class="group overflow-hidden rounded-md border border-border bg-white open:border-muted">
-                            <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-3 py-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark [&::-webkit-details-marker]:hidden">
-                                <span class="text-sm font-semibold text-dark"><?php echo esc_html( $title ); ?></span>
+                            <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-3 py-3 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dark [&::-webkit-details-marker]:hidden">
+                                <span class="min-w-0 text-sm font-semibold text-dark"><?php echo esc_html( $title ); ?></span>
                                 <svg class="size-4 shrink-0 text-dark/70 transition-transform group-open:rotate-180 motion-reduce:transition-none"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
                                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -179,7 +179,7 @@ $tabs = [
 
         <div role="tabpanel" id="<?php echo esc_attr( $id . '-content-about' ); ?>"
             aria-labelledby="<?php echo esc_attr( $id . '-tab-about' ); ?>" data-spotlight-content="about"
-            tabindex="0" hidden>
+            tabindex="0" class="focus-visible:outline-offset-[-2px]" hidden>
 
             <div class="space-y-3 py-2 text-sm leading-6 text-dark">
                 <?php foreach ( $project['about'] as $paragraph ) : ?>

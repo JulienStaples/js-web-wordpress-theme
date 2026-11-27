@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main>
+<main id="main-content" tabindex="-1">
     <?php
     while ( have_posts() ) :
         the_post();

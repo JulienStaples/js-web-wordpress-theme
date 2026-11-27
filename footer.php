@@ -1,8 +1,8 @@
-<footer id="footer" class="bg-dark text-light">
+<footer id="footer" class="border-t border-border-dark bg-dark text-light">
     <div class="section gap-7">
 
-        <div class="flex flex-col gap-7 md:flex-row md:gap-36">
-            <div class="flex flex-col gap-2 md:gap-3">
+        <div class="flex flex-col gap-7 md:flex-row md:gap-12 lg:gap-36">
+            <div class="flex min-w-0 max-w-full flex-col gap-2 md:gap-3">
                 <h2 id="contact-heading">
                     Contact
                 </h2>
@@ -12,13 +12,13 @@
                 </p>
             </div>
 
-            <div class="flex flex-col items-start gap-2 md:gap-3">
-                <a href="mailto:julienstaples.web@gmail.com" class="font-medium underline underline-offset-2">
+            <div class="flex min-w-0 max-w-full flex-col items-start gap-2 md:gap-3">
+                <a href="mailto:julienstaples.web@gmail.com" class="max-w-full wrap-anywhere font-medium underline underline-offset-2">
                     julienstaples.web@gmail.com
                 </a>
 
                 <button type="button" id="copy-email"
-                    class="inline-flex cursor-pointer items-center gap-2 rounded-md border border-muted px-3 py-2 text-sm text-light hover:border-light">
+                    class="inline-flex min-h-11 max-w-full cursor-pointer items-center gap-2 rounded-md border border-muted px-3 py-2 text-sm text-light hover:border-light">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"
                         aria-hidden="true">
@@ -67,7 +67,9 @@
     </div>
 </footer>
 
-<?php get_template_part( 'components/scroll-to-top' ); ?>
+<div class="mx-auto flex w-full max-w-page justify-end px-4 pb-4 sm:px-6 lg:px-8 back-to-top-container">
+    <?php get_template_part( 'components/scroll-to-top' ); ?>
+</div>
 
 <script>
     const copyEmailButton = document.querySelector('#copy-email');

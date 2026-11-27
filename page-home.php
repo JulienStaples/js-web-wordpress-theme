@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main id="main-content">
+<main id="main-content" tabindex="-1">
 
     <section>
         <div class="section gap-8 md:flex-row md:items-center lg:gap-14 lg:py-16">

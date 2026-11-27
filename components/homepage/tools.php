@@ -81,15 +81,15 @@ $capabilities = [
                         aria-expanded="false" aria-controls="<?php echo esc_attr( $panel_id ); ?>"
                         class="group flex w-full flex-col gap-3 rounded-lg bg-light p-5 text-left text-dark transition-colors hover:ring-1 hover:ring-border-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light aria-expanded:ring-2 aria-expanded:ring-muted motion-reduce:transition-none <?php echo 0 === $column_index ? 'md:col-start-1' : 'md:col-start-2'; ?> md:row-start-1">
 
-                        <div class="flex w-full items-center gap-3">
+                        <span class="flex w-full items-center gap-3">
 
-                            <div class="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+                            <span class="flex min-w-0 flex-1 flex-wrap items-center gap-2">
 
-                                <h3 class="text-base font-semibold">
+                                <span class="text-base font-semibold">
                                     <?php echo esc_html( $capability['title'] ); ?>
-                                </h3>
+                                </span>
 
-                                <div class="flex flex-wrap items-center gap-2" aria-hidden="true">
+                                <span class="flex flex-wrap items-center gap-2" aria-hidden="true">
 
                                     <?php foreach ( $capability['icons'] as $icon ) : ?>
 
@@ -133,9 +133,9 @@ $capabilities = [
 
                                     <?php endforeach; ?>
 
-                                </div>
+                                </span>
 
-                            </div>
+                            </span>
 
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -144,11 +144,11 @@ $capabilities = [
                                 <path d="m6 9 6 6 6-6"></path>
                             </svg>
 
-                        </div>
+                        </span>
 
-                        <p class="text-sm text-dark/75">
+                        <span class="text-sm text-dark/75">
                             <?php echo esc_html( $capability['skills'] ); ?>
-                        </p>
+                        </span>
 
                     </button>
 

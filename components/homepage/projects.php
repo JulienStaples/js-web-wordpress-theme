@@ -3,141 +3,144 @@ $projects = [
     [
         'id' => 'ggb',
         'title' => 'GGB Enterprises',
-        'subtitle' => 'Contracting business website',
-        'description' => 'I built and launched a responsive WordPress website for a small contracting business.',
-        'technologies' => [
-            'WordPress',
-        ],
+        'subtitle' => 'Client Website',
+        'description' => 'I worked with a small contracting business to build and launch its WordPress website, handling the page layouts and content as part of the project.',
+        'technologies' => [ 'WordPress', 'Elementor', 'HTML', 'CSS', 'Figma', 'WPForms' ],
         'image_url' => get_theme_file_uri( 'assets/imgs/ggb-home-desktop.png' ),
         'mobile_image_url' => get_theme_file_uri( 'assets/imgs/ggb-home-mobile.png' ),
         'url' => 'https://ggbenterprises.org/',
         'link_text' => 'Visit website',
         'highlights' => [
-            'Responsive layouts' => [
-                'summary' => 'Website layouts built for desktop and mobile visitors.',
-                'details' => [
-                    'I handled the responsive page layouts as part of the WordPress build.',
-                    'The same business information is accessible across screen sizes.',
+            'Client & Project Planning' => [
+                'paragraphs' => [
+                    'I worked directly with the business owner to understand what he wanted from his website and what his customers needed to know. We worked through the design and content together, and I organized the site around his services, previous work, financing options and getting customers in touch for an estimate.',
                 ],
             ],
-            'Business presentation' => [
-                'summary' => 'A finished customer-facing website with the company\'s information and content.',
-                'details' => [
-                    'I organized and set up the company content across the website.',
-                    'I completed the build and launch for the contracting business.',
+            'Design & Development' => [
+                'paragraphs' => [
+                    'I worked on the designs in Figma before building the site in WordPress with Elementor. I used my own HTML and CSS where I needed more control over the layouts and set up the estimate request forms using WPForms.',
+                ],
+            ],
+            'Launch & Delivery' => [
+                'paragraphs' => [
+                    'I handled the hosting and domain setup and worked through the client\'s feedback before launch. I tested the site on desktop and mobile, checked that the estimate request forms worked and made sure the client understood the ongoing costs of running the website.',
                 ],
             ],
         ],
-        'about' => 'I built and launched this WordPress website for a small contracting business. I handled the page layouts, content setup, responsive implementation, and delivery, with the goal of presenting the business clearly to customers across different screen sizes.',
+        'about' => [
+            'GGB Enterprises is an independently owned contracting business that has been serving the Phoenix area since 2004. The company takes on a wide range of residential and commercial projects, from kitchen and bathroom renovations to room additions and new home construction.',
+            'Their website introduces the business, showcases previous projects and gives prospective customers a place to explore services, find financing options and request a free estimate.',
+        ],
     ],
     [
         'id' => 'sipndrift',
         'title' => 'Sip & Drift',
-        'subtitle' => 'Mobile bartending website',
-        'description' => 'I built a website presenting mobile bartending services, packages, and a path toward booking.',
-        'technologies' => [],
+        'subtitle' => 'Client Website',
+        'description' => 'I built this website for a mobile bartending business so customers could explore their services, compare packages and find out how to book.',
+        'technologies' => [ 'WordPress', 'Elementor', 'HTML', 'CSS', 'JavaScript', 'PHP', 'Figma' ],
         'image_url' => get_theme_file_uri( 'assets/imgs/sipdrift-home-desktop.png' ),
         'mobile_image_url' => get_theme_file_uri( 'assets/imgs/sipdrift-home-mobile.png' ),
         'url' => 'https://sipdrift.shop/',
         'link_text' => 'Visit website',
         'highlights' => [
-            'Services and packages' => [
-                'summary' => 'Visitors can explore the mobile bartending services and package offerings.',
-                'details' => [
-                    'I structured the site around the business\'s service descriptions and package information.',
-                    'The content presents the offerings together in a customer-facing experience.',
+            'Client & Project Planning' => [
+                'paragraphs' => [
+                    'I worked with the owners of Sip & Drift to plan a website that reflected the personality of their mobile bartending business. The site needed to help customers compare packages, explore the drink menu and book services for different types of events without making the process complicated.',
                 ],
             ],
-            'Path toward booking' => [
-                'summary' => 'The website helps prospective customers take the next step toward booking.',
-                'details' => [
-                    'I organized the content so visitors can understand the services before taking the next step.',
-                    'The project focuses on an understandable path toward booking, rather than a complex application.',
+            'Design & Development' => [
+                'paragraphs' => [
+                    'I worked on the visual design in Figma and built the site in WordPress using Elementor. I used custom HTML, CSS, JavaScript and PHP where I needed more control over the design and functionality of the site.',
+                ],
+            ],
+            'Launch & Delivery' => [
+                'paragraphs' => [
+                    'I handled the move to WordPress, including transferring the existing content and creating anything that was missing. I worked through the client\'s feedback, tested the site across devices and took care of getting it live.',
                 ],
             ],
         ],
-        'about' => 'I built the customer-facing website for Sip & Drift, organizing information about mobile bartending services, packages, and booking. The focus was on making the business and its offerings easy to understand and giving interested visitors a clear way to move forward.',
+        'about' => [
+            'Sip & Drift is a mobile bartending business started by three friends who met while working in the restaurant industry. They provide bartending services for weddings, private parties and other events, with handcrafted cocktails and customizable bar packages.',
+            'Their website introduces the team and their services, allows customers to compare packages based on the size and needs of their event, and provides a detailed cocktail menu for customers to explore before booking.',
+        ],
     ],
     [
         'id' => 'language-app',
         'title' => 'Language Learning Demo',
-        'subtitle' => 'Interactive reading application',
-        'description' => 'An interactive reading application with vocabulary tracking and difficulty ratings.',
-        'technologies' => [
-            'Next.js',
-            'React',
-            'TypeScript',
-            'Tailwind CSS',
-        ],
+        'subtitle' => 'Web Application',
+        'description' => 'I built an app for reading in another language where you can keep track of your vocabulary and mark how difficult individual words are as you read.',
+        'technologies' => [ 'Next.js', 'React', 'Node.js', 'TypeScript', 'Tailwind CSS' ],
         'image_url' => get_theme_file_uri( 'assets/imgs/lang-demo-french-desktop.png' ),
         'mobile_image_url' => get_theme_file_uri( 'assets/imgs/lang-demo-french-mobile.png' ),
         'url' => 'https://github.com/JulienStaples/lang-demo',
         'link_text' => 'View source on GitHub',
         'highlights' => [
-            'Interactive reading' => [
-                'summary' => 'Read and interact with text word by word.',
-                'details' => [
-                    'Word-level interaction is part of the reading interface, rather than a separate tool.',
-                    'The reading experience sits alongside vocabulary and difficulty features.',
+            'Planning & Design' => [
+                'paragraphs' => [
+                    'The idea behind this project was to make it easier to learn a language through reading. I wanted readers to be able to work through a book in another language, look up unfamiliar words and build up their vocabulary naturally as they read.',
+                    'I designed the interface around the text itself, using different colors to show how familiar the reader is with each word. Clicking on a word brings up the tools needed to work with it without losing your place in the text.',
                 ],
             ],
-            'Vocabulary tracking' => [
-                'summary' => 'Keep track of vocabulary while reading.',
-                'details' => [
-                    'I built vocabulary tracking into the same interface used for reading.',
-                    'This connects reading practice with an active vocabulary workflow.',
+            'Application Development' => [
+                'paragraphs' => [
+                    'I built the application in Next.js and React, using TypeScript to manage the different kinds of data the app works with. I used React Context to share information between components so that the reading interface and vocabulary tools could work together.',
+                    'This project also gave me a reason to work with libraries I hadn\'t used before, including Compromise for natural language processing and shadcn/ui for building out the interface.',
                 ],
             ],
-            'Difficulty ratings' => [
-                'summary' => 'Assign difficulty ratings to individual words.',
-                'details' => [
-                    'Ratings apply at the word level rather than to an entire text.',
-                    'Difficulty information works alongside the vocabulary features.',
+            'Features & Functionality' => [
+                'bullets' => [
+                    [ 'label' => 'Reading', 'text' => 'Each word in the text is interactive, allowing readers to work with individual words without interrupting their reading.' ],
+                    [ 'label' => 'Vocabulary', 'text' => 'Readers can keep track of the words they\'re learning and update their familiarity with them over time.' ],
+                    [ 'label' => 'Difficulty', 'text' => 'Words are color coded according to their difficulty rating, giving readers a visual sense of how much of the text they understand.' ],
+                ],
+            ],
+            'Performance & Testing' => [
+                'paragraphs' => [
+                    'I noticed a slowdown when switching between pages of text, but strangely, going from a longer page to a shorter one was slower than the other way around. I expected rendering more content to be the expensive part.',
+                    'Using React Developer Tools, I found that removing the existing word elements was more expensive in my application than rendering new ones. This changed how I approached the performance problem and gave me a better understanding of how React handles updates.',
                 ],
             ],
         ],
-        'about' => 'I built this interactive reading application using Next.js, React, TypeScript, and Tailwind CSS. It combines text interaction, vocabulary tracking, and word difficulty ratings in one interface, turning reading practice into something users can actively work through rather than just view.',
+        'about' => [
+            'This application is based on the idea of learning a language through exposure to meaningful content. Rather than following a predetermined curriculum, learners can read about subjects they\'re interested in and encounter vocabulary in its natural context.',
+            'As learners progress, they encounter familiar words in different sentences and situations, gradually developing an understanding of how the language is used beyond individual definitions.',
+        ],
     ],
     [
         'id' => 'portfolio',
         'site_url' => 'https://julienstaplesweb.com/',
-        'title' => 'This Portfolio',
-        'subtitle' => 'Custom WordPress website',
-        'description' => 'A purpose-built portfolio featuring a custom WordPress theme and interactive components.',
-        'technologies' => [
-            'WordPress',
-            'PHP',
-            'Tailwind CSS',
-            'JavaScript',
-        ],
+        'title' => 'This Website',
+        'subtitle' => 'Custom WordPress Theme',
+        'description' => 'I built my own WordPress theme for this site, including the interactive project viewer you\'re using right now.',
+        'technologies' => [ 'WordPress', 'PHP', 'HTML', 'Tailwind CSS', 'JavaScript', 'GSAP' ],
         'image_url' => '',
         'mobile_image_url' => '',
-        'url' => '',
-        'link_text' => '',
+        'url' => 'https://github.com/JulienStaples/js-web-wordpress-theme',
+        'link_text' => 'View source on GitHub',
         'highlights' => [
-            'Custom WordPress theme' => [
-                'summary' => 'Purpose-built PHP templates and reusable components.',
-                'details' => [
-                    'I organized homepage sections as reusable WordPress PHP template parts.',
-                    'Tailwind CSS provides shared styling across the custom theme.',
+            'Planning & Design' => [
+                'paragraphs' => [
+                    'I designed this site around how people actually look through portfolios, particularly recruiters who might only spend a few seconds here. I wanted the most important information to be easy to find without having to navigate through several pages.',
+                    'I spent time researching how people scan websites and used that research to guide the layout, content and interactions. There\'s more detail available throughout the site for anyone who wants to spend a little longer looking through my work.',
                 ],
             ],
-            'Interactive project explorer' => [
-                'summary' => 'Switch between projects, screenshots, and details on the homepage.',
-                'details' => [
-                    'Vanilla JavaScript switches the active project and its tabs without a page reload.',
-                    'Each project has separate Preview, Highlights, and About views, with mobile previews where available.',
+            'Custom WordPress Theme' => [
+                'paragraphs' => [
+                    'I wanted to build this site without relying on a page builder or an existing theme, so I developed my own WordPress theme using PHP and Tailwind CSS.',
+                    'I broke the site into reusable templates and components to keep the code organized and make it easier to change individual parts of the site without affecting everything else. WordPress gives me a way to manage the content separately from the design and functionality.',
                 ],
             ],
-            'Responsive layout' => [
-                'summary' => 'A single design system across desktop and mobile.',
-                'details' => [
-                    'Project selection surrounds the main spotlight on larger screens and reflows on smaller screens.',
-                    'The same shared components and visual rules carry between layouts.',
+            'Interactive Features' => [
+                'paragraphs' => [
+                    'I built the interactive parts of this site using vanilla JavaScript and GSAP. The project viewer, screenshot gallery and expandable cards let visitors explore my work without having to leave the homepage.',
+                    'I also wanted these interactions to work just as well on mobile and be usable with a keyboard, so I took that into account when building the components.',
                 ],
             ],
         ],
-        'about' => 'I built this portfolio as a custom WordPress theme, using reusable PHP template parts and Tailwind CSS for responsive styling. Vanilla JavaScript powers the project spotlight, NE6 screenshot gallery, and expandable capability cards without page reloads. A separate custom WordPress plugin is still in development.',
+        'about' => [
+            'This website is both my professional portfolio and an ongoing personal project. It brings together my professional experience, client work and some of the things I\'ve built while exploring new areas of web development.',
+            'It also gives me a place to experiment with ideas and technologies outside of my day to day work. As I learn new things, I have somewhere to put them into practice.',
+        ],
     ],
 ];
 

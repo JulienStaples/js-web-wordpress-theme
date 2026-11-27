@@ -146,64 +146,46 @@ $tabs = [
             aria-labelledby="<?php echo esc_attr( $id . '-tab-highlights' ); ?>" data-spotlight-content="highlights"
             tabindex="0" hidden>
 
-            <?php // Compact highlight cards: the entire summary remains visible without interaction. ?>
             <ul class="flex flex-col gap-2 py-1">
-                <?php foreach ( ( $project['highlights'] ?? [] ) as $title => $highlight ) : ?>
-                    <?php
-                    // Backward compatible with the existing 'Title' => 'Description' data.
-                    // Later, individual entries can provide optional deeper evidence:
-                    // 'Title' => [ 'summary' => '...', 'details' => [ '...', '...' ] ].
-                    $summary = is_array( $highlight )
-                        ? ( $highlight['summary'] ?? '' )
-                        : $highlight;
-                    $detail_lines = is_array( $highlight ) ? ( $highlight['details'] ?? [] ) : [];
-                    $detail_lines = array_values( array_filter( array_map(
-                        'strval', (array) $detail_lines
-                    ), 'strlen' ) );
-                    $has_details = ! empty( $detail_lines );
-                    ?>
-
+                <?php foreach ( $project['highlights'] as $title => $highlight ) : ?>
                     <li>
-                        <?php if ( $has_details ) : ?>
-                            <details name="portfolio-highlights-<?php echo esc_attr( $id ); ?>" class="group overflow-hidden rounded-md border border-border bg-white open:border-muted">
-                                <summary class="flex min-h-16 cursor-pointer list-none items-start justify-between gap-3 px-3 py-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark [&::-webkit-details-marker]:hidden">
-                                    <span class="flex min-w-0 flex-col gap-1">
-                                        <span class="text-sm font-semibold text-dark"><?php echo esc_html( $title ); ?></span>
-                                        <span class="text-sm leading-5 text-dark/75"><?php echo esc_html( $summary ); ?></span>
-                                    </span>
-                                    <svg class="mt-1 size-4 shrink-0 text-dark/70 transition-transform group-open:rotate-180 motion-reduce:transition-none"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <path d="m6 9 6 6 6-6" />
-                                    </svg>
-                                </summary>
-                                <div class="border-t border-border px-3 py-3">
-                                    <ul class="list-disc space-y-2 pl-4 text-sm leading-6 text-dark/80">
-                                        <?php foreach ( $detail_lines as $line ) : ?>
-                                            <li><?php echo esc_html( $line ); ?></li>
+                        <details name="portfolio-highlights-<?php echo esc_attr( $id ); ?>" class="group overflow-hidden rounded-md border border-border bg-white open:border-muted">
+                            <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-3 py-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark [&::-webkit-details-marker]:hidden">
+                                <span class="text-sm font-semibold text-dark"><?php echo esc_html( $title ); ?></span>
+                                <svg class="size-4 shrink-0 text-dark/70 transition-transform group-open:rotate-180 motion-reduce:transition-none"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="m6 9 6 6 6-6" />
+                                </svg>
+                            </summary>
+                            <div class="max-w-prose space-y-3 border-t border-border px-3 py-3 text-sm leading-6 text-dark/80">
+                                <?php foreach ( ( $highlight['paragraphs'] ?? [] ) as $paragraph ) : ?>
+                                    <p><?php echo esc_html( $paragraph ); ?></p>
+                                <?php endforeach; ?>
+
+                                <?php if ( ! empty( $highlight['bullets'] ) ) : ?>
+                                    <ul class="list-disc space-y-2 pl-4">
+                                        <?php foreach ( $highlight['bullets'] as $bullet ) : ?>
+                                            <li><strong><?php echo esc_html( $bullet['label'] ); ?>:</strong> <?php echo esc_html( $bullet['text'] ); ?></li>
                                         <?php endforeach; ?>
                                     </ul>
-                                </div>
-                            </details>
-                        <?php else : ?>
-                            <div class="flex min-h-16 flex-col justify-center gap-1 rounded-md border border-border bg-white px-3 py-3">
-                                <p class="text-sm font-semibold text-dark"><?php echo esc_html( $title ); ?></p>
-                                <p class="text-sm leading-5 text-dark/75"><?php echo esc_html( $summary ); ?></p>
+                                <?php endif; ?>
                             </div>
-                        <?php endif; ?>
+                        </details>
                     </li>
                 <?php endforeach; ?>
             </ul>
-
         </div>
 
         <div role="tabpanel" id="<?php echo esc_attr( $id . '-content-about' ); ?>"
             aria-labelledby="<?php echo esc_attr( $id . '-tab-about' ); ?>" data-spotlight-content="about"
             tabindex="0" hidden>
 
-            <p class="py-2 text-sm leading-6 text-dark">
-                <?php echo esc_html( $project['about'] ); ?>
-            </p>
+            <div class="space-y-3 py-2 text-sm leading-6 text-dark">
+                <?php foreach ( $project['about'] as $paragraph ) : ?>
+                    <p><?php echo esc_html( $paragraph ); ?></p>
+                <?php endforeach; ?>
+            </div>
 
         </div>
 

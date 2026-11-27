@@ -1,19 +1,22 @@
 <?php
 $experience_items = [
     [
-        'title' => 'NE6 — WebOps Specialist',
-        'dates' => '2026–Present',
-        'description' => 'Production WordPress operations and web development.',
+        'title' => 'NE6',
+        'role' => 'WebOps Specialist',
+        'dates' => '2026 – Present',
+        'description' => 'Website development and ongoing management of the company\'s production WordPress site.',
     ],
     [
-        'title' => 'MRB Info Technologies — Intern',
-        'dates' => '2025–2026',
-        'description' => 'Worked with a development team across web and software projects.',
+        'title' => 'MRB Info Technologies',
+        'role' => 'Software Development Intern',
+        'dates' => '2025 – 2026',
+        'description' => 'Worked alongside a development team on web and software projects in a collaborative development environment.',
     ],
     [
-        'title' => 'Independent Web Development & Projects',
-        'dates' => '2020–2025',
-        'description' => 'Independent web projects beginning in 2020, with paid small-business client work beginning in 2023.',
+        'title' => 'Independent Web Development',
+        'role' => 'Freelance & Personal Projects',
+        'dates' => '2020 – 2025',
+        'description' => 'Started building independent web projects in 2020 and began working with small business clients in 2023.',
     ],
 ];
 ?>
@@ -45,7 +48,7 @@ $experience_items = [
                     <?php echo esc_html( $item['title'] ); ?>
                 </h3>
                 <p class="mt-1 text-sm text-muted-light/80">
-                    <?php echo esc_html( $item['dates'] ); ?>
+                    <?php echo esc_html( $item['role'] . ' | ' . $item['dates'] ); ?>
                 </p>
                 <p class="mt-2 text-sm text-muted-light">
                     <?php echo esc_html( $item['description'] ); ?>
@@ -70,7 +73,7 @@ $experience_items = [
                 'components/button',
                 null,
                 [
-                    'text' => 'View full résumé',
+                    'text' => 'View full resume',
                     'url' => get_theme_file_uri( 'assets/imgs/Julien-Staples-Resume.pdf' ),
                     'variant' => 'light',
                 ]

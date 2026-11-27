@@ -3,7 +3,7 @@
 
         <div class="flex flex-col gap-7 md:flex-row md:gap-36">
             <div class="flex flex-col gap-2 md:gap-3">
-                <h2>
+                <h2 id="contact-heading">
                     Contact
                 </h2>
 
@@ -39,7 +39,7 @@
                     <li>
                         <a href="<?php echo esc_url( get_theme_file_uri( 'assets/imgs/Julien-Staples-Resume.pdf' ) ); ?>"
                             target="_blank" rel="noopener noreferrer">
-                            Résumé
+                            Resume
                             <span class="sr-only">opens in a new tab</span>
                         </a>
                     </li>

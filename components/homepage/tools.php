@@ -2,7 +2,7 @@
 $capabilities = [
     [
         'title' => 'WordPress & CMS',
-        'skills' => 'WordPress · Divi · Elementor · content publishing · plugins and forms',
+        'skills' => 'WordPress · Divi · Elementor · PHP · Custom theme · CMS maintenance · Content publishing',
         'description' => 'I build and maintain WordPress websites, from content updates to custom layouts and functionality.',
         'demo' => 'WordPress Page Builder',
         'icons' => [
@@ -13,7 +13,7 @@ $capabilities = [
     ],
     [
         'title' => 'Front-End',
-        'skills' => 'HTML · CSS · JavaScript · PHP · responsive implementation',
+        'skills' => 'HTML · CSS · JavaScript · Tailwind CSS · GSAP · Responsive design',
         'description' => 'I use front-end code to implement responsive designs and build functionality beyond a CMS\'s defaults.',
         'demo' => 'Code to Website',
         'icons' => [
@@ -24,7 +24,7 @@ $capabilities = [
     ],
     [
         'title' => 'Analytics & QA',
-        'skills' => 'GA4 · Google Tag Manager · on-page SEO · accessibility · responsive QA',
+        'skills' => 'Google Analytics (GA4) · Google Tag Manager · SEO · Accessibility · Responsive QA · Performance testing',
         'description' => 'I work with analytics, tracking, testing, and accessibility to improve production websites.',
         'demo' => 'Analytics & QA Dashboard',
         'icons' => [
@@ -35,7 +35,7 @@ $capabilities = [
     ],
     [
         'title' => 'Additional Development',
-        'skills' => 'React · Next.js · TypeScript · Tailwind CSS · Git/GitHub',
+        'skills' => 'React · Next.js · TypeScript · Node.js · SQL · Git · GitHub',
         'description' => 'I also build interactive applications and custom components using modern JavaScript frameworks.',
         'demo' => 'Application Components',
         'icons' => [

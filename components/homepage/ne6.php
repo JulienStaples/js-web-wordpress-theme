@@ -55,51 +55,41 @@ foreach ( $ne6_gallery as $mode => $screenshots ) {
 $ne6_initial_mode = ! empty( $ne6_gallery['desktop'] ) ? 'desktop' : 'mobile';
 $ne6_has_screenshots = ! empty( $ne6_gallery[ $ne6_initial_mode ] );
 
-// NE6-specific technologies. Keep the initial scan compact; details remain available below.
-$ne6_stack = [
-    'WordPress',
-    'Divi',
-    'GA4',
-    'GTM',
-    'HTML / CSS / JS',
-];
+$ne6_stack = [ 'WordPress', 'Divi', 'HTML', 'CSS', 'JavaScript', 'GA4', 'Google Tag Manager' ];
 
-// Short summaries do the scanning work; expanded panels preserve supporting detail.
-// Wording is provisional until the site-wide copy review.
 $ne6_work_areas = [
     [
-        'title'   => 'Web Operations & Front-End',
-        'summary' => 'Updates · fixes · responsive builds · custom features',
+        'title' => 'Design & Development',
         'details' => [
-            'Investigate plugin and form problems, layout issues, and production website requests.',
-            'Standardize blog publishing from submissions and formatting through imagery, alt text, SEO, review, and release.',
-            'Build custom page layouts and functionality when standard Divi modules cannot meet the requirements.',
-            'Test implementations across devices before and after publishing.',
+            [ 'label' => 'Planning', 'text' => 'New projects often start with a general idea of what the team wants. I\'m given a lot of freedom to work out what pages we need, how they fit together and what goes on them.' ],
+            [ 'label' => 'Design', 'text' => 'I handle the page layouts and work out how the content should be presented on desktop and mobile.' ],
+            [ 'label' => 'Development', 'text' => 'I build directly in WordPress using Divi and regularly write my own HTML, CSS and JavaScript to get the layout or functionality I need.' ],
+            [ 'label' => 'Content', 'text' => 'I write much of the copy and create supporting imagery for the pages I build. I also work on SEO as I put the content together.' ],
         ],
     ],
     [
-        'title'   => 'Analytics & Reporting',
-        'summary' => 'GA4 · GTM · tracking · reports',
+        'title' => 'Website Maintenance & Support',
         'details' => [
-            'Implement and verify website measurement with Google Analytics 4 and Google Tag Manager.',
-            'Prepare recurring reports to help the team understand traffic, engagement, and user behavior.',
+            [ 'label' => 'Maintenance', 'text' => 'I handle WordPress and plugin updates, keep backups and check that everything still works after changes.' ],
+            [ 'label' => 'Troubleshooting', 'text' => 'When something breaks, I investigate the cause and make the necessary fixes. This often involves plugins, forms or layout issues.' ],
+            [ 'label' => 'Publishing', 'text' => 'I developed the blog publishing workflow, including a simple Google Form for article submissions. I handle formatting, preparing imagery and reviewing content before it goes live.' ],
+            [ 'label' => 'Testing', 'text' => 'I check pages across screen sizes and test their functionality before and after publishing.' ],
         ],
     ],
     [
-        'title'   => 'Website Initiatives',
-        'summary' => 'Accessibility Program · blog hub',
+        'title' => 'Analytics & Reporting',
         'details' => [
-            'Built a seven-page Accessibility Program and blog hub, including navigation and content structure.',
-            'Translate early ideas into page structures, user journeys, copy, imagery, and on-page SEO.',
-            'Plan and publish connected website experiences supporting company initiatives.',
+            [ 'label' => 'Tracking', 'text' => 'I set up tracking through Google Tag Manager and check that the data is coming through correctly in GA4.' ],
+            [ 'label' => 'Analytics', 'text' => 'I look at where visitors are coming from, which pages they\'re visiting and how they\'re interacting with the site.' ],
+            [ 'label' => 'Reporting', 'text' => 'I put together regular reports so the team can see how the website is performing and use that information when planning future work.' ],
         ],
     ],
     [
-        'title'   => 'Beyond the Role',
-        'summary' => 'Cross-team work · learning unfamiliar tools',
+        'title' => 'Team & Project Coordination',
         'details' => [
-            'Coordinate requests across teams using Trello, Slack, and Google Workspace.',
-            'Support content, imagery, and repeatable workflows when a project requires more than website development.',
+            [ 'label' => 'Collaboration', 'text' => 'I work with people across the company to understand what they need from the website and help work out how to make it happen.' ],
+            [ 'label' => 'Organization', 'text' => 'I use Trello, Slack and Google Workspace to manage requests, keep track of ongoing projects and communicate progress.' ],
+            [ 'label' => 'Flexibility', 'text' => 'Working on a small team means I often take on work outside my usual responsibilities, including learning new tools and helping develop processes that make our work easier.' ],
         ],
     ],
 ];
@@ -114,7 +104,7 @@ $ne6_work_areas = [
         null,
         [
             'number' => '01',
-            'title'  => 'Professional Work',
+            'title'  => 'Current Role',
             'id'     => 'ne6-heading',
         ]
     );
@@ -123,10 +113,9 @@ $ne6_work_areas = [
     <div class="grid items-stretch gap-5 lg:grid-cols-5 lg:grid-rows-[auto_1fr_auto] lg:gap-x-8 lg:gap-y-0">
 
         <div class="flex min-w-0 flex-col gap-2 rounded-lg border border-border bg-white p-4 text-dark sm:p-5 lg:col-span-2 lg:col-start-4 lg:row-start-1 lg:rounded-b-none lg:border-b-0 lg:pb-4">
-            <h3 class="text-2xl font-medium leading-tight md:text-3xl">Production WebOps at NE6</h3>
+            <h3 class="text-2xl font-medium leading-tight md:text-3xl">WebOps at NE6</h3>
             <p class="text-sm leading-6 text-dark/75">
-                I operate and improve NE6's production WordPress website through
-                day-to-day site support, front-end development, and analytics.
+                At NE6, I work across the production site. I plan and build new sections, maintain what is already there, troubleshoot problems, and track how the site is performing.
             </p>
         </div>
 
@@ -302,25 +291,22 @@ $ne6_work_areas = [
                 <div class="flex flex-col gap-2 border-t border-border pt-4">
                     <?php foreach ( $ne6_work_areas as $area ) : ?>
                         <details name="ne6-work" class="group overflow-hidden rounded-md border border-border bg-white open:border-muted">
-                            <summary class="flex min-h-16 cursor-pointer list-none items-start justify-between gap-3 rounded-md px-3 py-2.5 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dark [&::-webkit-details-marker]:hidden">
+                            <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 rounded-md px-3 py-2.5 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dark [&::-webkit-details-marker]:hidden">
                                 <span class="flex min-w-0 flex-col gap-1">
                                     <span class="text-sm font-semibold text-dark">
                                         <?php echo esc_html( $area['title'] ); ?>
                                     </span>
-                                    <span class="text-xs leading-5 text-dark/70 sm:text-[13px]">
-                                        <?php echo esc_html( $area['summary'] ); ?>
-                                    </span>
                                 </span>
-                                <svg class="mt-1 size-4 shrink-0 text-dark/70 transition-transform group-open:rotate-180 motion-reduce:transition-none"
+                                <svg class="size-4 shrink-0 text-dark/70 transition-transform group-open:rotate-180 motion-reduce:transition-none"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
                                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                     <path d="m6 9 6 6 6-6" />
                                 </svg>
                             </summary>
                             <div class="border-t border-border px-3 py-3">
-                                <ul class="list-disc space-y-2 pl-4 text-sm leading-5 text-dark/80">
+                                <ul class="list-disc space-y-4 pl-4 text-sm leading-6 text-dark/80">
                                     <?php foreach ( $area['details'] as $detail ) : ?>
-                                        <li><?php echo esc_html( $detail ); ?></li>
+                                        <li><strong><?php echo esc_html( $detail['label'] ); ?>:</strong> <?php echo esc_html( $detail['text'] ); ?></li>
                                     <?php endforeach; ?>
                                 </ul>
                             </div>

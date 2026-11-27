@@ -30,9 +30,8 @@
                         I build websites. And keep them working.
                     </h1>
 
-                    <p class="max-w-lg text-sm text-muted-light lg:text-base">
-                        Most of my professional work is in WordPress.
-                        I use front-end code when a site needs something custom.
+                    <p class="max-w-[64ch] text-base leading-6 text-muted-light">
+                        My work touches every part of the website, from planning and content to maintenance and analytics.
                     </p>
                 </div>
 
@@ -41,9 +40,9 @@
                     'components/button',
                     null,
                     [
-                        'text' => 'View my projects',
-                        'url' => '#projects',
-                        'variant' => 'light',
+                        'text' => 'View resume',
+                        'url' => get_theme_file_uri( 'assets/imgs/Julien-Staples-Resume.pdf' ),
+                        'document_variant' => 'light',
                     ]
                 );
                 ?>

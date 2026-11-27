@@ -223,6 +223,8 @@ $capabilities = [
 
         triggers.forEach(trigger => {
             trigger.addEventListener('click', () => {
+                if (window.jsWebInteractions?.toggleCapability(section, triggers, trigger)) return;
+
                 const wasOpen =
                     trigger.getAttribute('aria-expanded') === 'true';
 

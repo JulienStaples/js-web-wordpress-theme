@@ -4,7 +4,18 @@
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php wp_head(); ?>
+    <?php
+    // Shared interaction motion; independent of the homepage GSAP demos.
+    $interaction_style = '/css/components/interactions.css';
+    $interaction_script = '/assets/js/interactions.js';
+    if ( is_readable( get_theme_file_path( $interaction_style ) ) ) {
+        wp_enqueue_style( 'js-web-interactions', get_theme_file_uri( $interaction_style ), [ 'js-web-tailwind' ], filemtime( get_theme_file_path( $interaction_style ) ) );
+    }
+    if ( is_readable( get_theme_file_path( $interaction_script ) ) ) {
+        wp_enqueue_script( 'js-web-interactions', get_theme_file_uri( $interaction_script ), [], filemtime( get_theme_file_path( $interaction_script ) ), true );
+    }
+    wp_head();
+    ?>
 </head>
 
 <body id="top" tabindex="-1" <?php body_class(); ?>>

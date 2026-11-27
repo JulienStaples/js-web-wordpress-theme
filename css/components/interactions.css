@@ -1,0 +1,118 @@
+/* Shared micro-interactions. Individual transform properties preserve existing
+   Tailwind translate/rotate utilities (including centered gallery arrows). */
+:root {
+    --motion-press: 100ms;
+    --motion-return: 360ms;
+    --motion-spring: cubic-bezier(.22,.8,.28,1.255);
+}
+:where(button, a.inline-flex.no-underline, a.back-to-top) {
+    transition-property: scale, background-color, border-color, color, box-shadow, opacity;
+    transition-duration: var(--motion-return), 160ms, 160ms, 160ms, 160ms, 160ms;
+    transition-timing-function: var(--motion-spring), ease, ease, ease, ease, ease;
+}
+/* Unlayered selectors intentionally override Tailwind's transition utilities. */
+button:not(:disabled):not([aria-disabled="true"]):active,
+a.inline-flex.no-underline:active, a.back-to-top:active,
+.motion-key-pressed {
+    scale: .94;
+    transition-duration: var(--motion-press),160ms,160ms,160ms,160ms,160ms;
+    transition-timing-function: ease-out;
+}
+button[data-capability-toggle]:not(:disabled):active { scale: .98; }
+summary { transition: background-color 160ms ease; }
+summary:hover { background-color: #ededed; }
+summary:active { background-color: #ddd; }
+summary > svg, [data-capability-toggle] > span:first-child > svg {
+    transition: rotate var(--motion-return) var(--motion-spring), transform var(--motion-return) var(--motion-spring);
+}
+:is([data-ne6-previous],[data-project-scroll="previous"]) { --motion-arrow: -3px; }
+:is([data-ne6-next],[data-project-scroll="next"]) { --motion-arrow: 3px; }
+:is([data-ne6-previous],[data-ne6-next],[data-project-scroll]) > svg {
+    transition: translate var(--motion-return) var(--motion-spring);
+}
+@media (hover:hover) {
+    :is([data-ne6-previous],[data-ne6-next],[data-project-scroll]):not(:disabled):not([aria-disabled="true"]):hover > svg { translate: var(--motion-arrow) 0; }
+}
+:is([data-ne6-previous],[data-ne6-next],[data-project-scroll]):not(:disabled):not([aria-disabled="true"]):active > svg { translate: calc(var(--motion-arrow) * 1.5) 0; }
+.motion-toggle { position: relative; isolation: isolate; }
+.motion-toggle > .motion-indicator {
+    position: absolute; z-index: -1; background: #171717; border-radius: 4px; pointer-events: none;
+    transition: left var(--motion-return) var(--motion-spring), top var(--motion-return) var(--motion-spring), width var(--motion-return) var(--motion-spring), height var(--motion-return) var(--motion-spring);
+}
+.motion-toggle > :is([data-ne6-view],[data-preview-toggle]) { background: transparent !important; color: #171717 !important; }
+.motion-toggle > :is([data-ne6-view],[data-preview-toggle])[aria-pressed="true"] { color: #f7f7f7 !important; }
+/* Both intrinsic preview sizes contribute to the stage height. The inactive
+   view is invisible and non-interactive, not a second visible screenshot. */
+.motion-preview-stage { display: grid; align-items: center; position: relative; overflow: hidden; }
+.motion-preview-stage > [data-preview-view] { grid-area: 1 / 1; min-width: 0; }
+.motion-preview-stage > [data-preview-view][hidden] { display: block !important; visibility: hidden; pointer-events: none; }
+.motion-device-muted { opacity: 0 !important; }
+.motion-device-overlay { position: absolute; z-index: 5; pointer-events: none; overflow: hidden; background: #fff; }
+.motion-device-layer { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+.motion-device-layer > * { width: 100% !important; height: 100% !important; max-width: none !important; max-height: none !important; margin: 0 !important; aspect-ratio: auto !important; }
+.motion-device-layer > img { object-fit: cover; object-position: top; }
+.motion-device-layer > div { display: flex; flex-direction: column; }
+.motion-device-layer > div > img, .motion-device-layer > div > div:last-child { flex: 1 1 0; min-height: 0; width: 100%; height: auto; aspect-ratio: auto; }
+@media (prefers-reduced-motion: reduce) {
+    :where(button, a.inline-flex.no-underline, a.back-to-top), summary, summary > svg,
+    [data-capability-toggle] > span:first-child > svg,
+    :is([data-ne6-previous],[data-ne6-next],[data-project-scroll]) > svg,
+    .motion-toggle > .motion-indicator { transition: none !important; }
+    button:active, a.inline-flex.no-underline:active, a.back-to-top:active, .motion-key-pressed { scale: 1 !important; }
+    :is([data-ne6-previous],[data-ne6-next],[data-project-scroll]) > svg { translate: none !important; }
+}
+.motion-details > summary > svg { rotate: 0deg; }
+.motion-details.motion-details-open > summary > svg { rotate: 180deg; }
+/* Tailwind preflight sets [hidden] display:none!important in its base layer.
+   Override that rule in the same layer for this specific reserved-size view. */
+@layer base {
+    .motion-preview-stage > [data-preview-view][hidden] { display: block !important; }
+}
+
+/* Hover feedback: preserve existing theme colors and selection indicators.
+   No layout changes, and no hover motion on touch-only devices. */
+@media (hover: hover) and (pointer: fine) {
+    :where(button:not(:disabled):not([aria-disabled="true"]),
+        a.inline-flex.no-underline, a.back-to-top):hover:not(:active):not(.motion-key-pressed) {
+        scale: 1.035;
+    }
+    /* Large cards need less movement than compact controls. */
+    :is([data-capability-toggle], [data-project-selector]):not(:disabled):not([aria-disabled="true"]) {
+        transition: scale var(--motion-return) var(--motion-spring),
+            translate var(--motion-return) var(--motion-spring),
+            background-color 160ms ease, border-color 160ms ease,
+            color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+    }
+    :is([data-capability-toggle], [data-project-selector]):not(:disabled):not([aria-disabled="true"]):hover:not(:active):not(.motion-key-pressed) {
+        scale: 1.012;
+        translate: 0 -2px;
+    }
+    [data-capability-toggle]:not(:disabled):hover { background-color: #fff; }
+    [data-project-selector]:not(:disabled):hover { background-color: #343434; }
+    :is([data-capability-toggle], [data-project-selector]):active,
+    :is([data-capability-toggle], [data-project-selector]).motion-key-pressed {
+        translate: none;
+        transition-duration: var(--motion-press), var(--motion-press), 160ms, 160ms, 160ms, 160ms, 160ms;
+        transition-timing-function: ease-out;
+    }
+    [data-ne6-thumb]:not(:disabled):not([aria-disabled="true"]):not([aria-pressed="true"]):hover {
+        border-color: #777;
+    }
+    .motion-toggle > :is([data-ne6-view], [data-preview-toggle]):not(:disabled):not([aria-disabled="true"]):not([aria-pressed="true"]):hover {
+        background-color: #17171712 !important;
+    }
+    /* Preserve the active pill and tab colors; only the control itself moves. */
+    :is([data-ne6-view], [data-preview-toggle], [data-spotlight-tab]):not(:disabled):not([aria-disabled="true"]):hover:not(:active):not(.motion-key-pressed) {
+        scale: 1.025;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    :where(button, a.inline-flex.no-underline, a.back-to-top):hover,
+    :is([data-capability-toggle], [data-project-selector], [data-ne6-view], [data-preview-toggle], [data-spotlight-tab]):hover {
+        scale: 1 !important;
+    }
+    :is([data-capability-toggle], [data-project-selector]) {
+        translate: none !important;
+        transition: none !important;
+    }
+}

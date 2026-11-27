@@ -3,36 +3,42 @@
 $ne6_gallery = [
     'desktop' => [
         [
-            'file'  => 'assets/imgs/ne6-home-desktop.png',
-            'label' => 'Homepage',
-            'alt'   => 'Desktop screenshot of the NE6 homepage',
+            'file'    => 'assets/imgs/ne6-home-desktop.png',
+            'subject' => 'home',
+            'label'   => 'Homepage',
+            'alt'     => 'Desktop screenshot of the NE6 homepage',
         ],
         [
-            'file'  => 'assets/imgs/ne6-blog-desktop.png',
-            'label' => 'NE6 Blog',
-            'alt'   => 'Desktop screenshot of the NE6 blog and article cards',
+            'file'    => 'assets/imgs/ne6-blog-desktop.png',
+            'subject' => 'blog',
+            'label'   => 'NE6 Blog',
+            'alt'     => 'Desktop screenshot of the NE6 blog and article cards',
         ],
         [
-            'file'  => 'assets/imgs/ne6-decision-framework-desktop.png',
-            'label' => 'Decision Framework',
-            'alt'   => 'Desktop screenshot of the NE6 five-question decision framework',
+            'file'    => 'assets/imgs/ne6-decision-framework-desktop.png',
+            'subject' => 'decision-framework',
+            'label'   => 'Decision Framework',
+            'alt'     => 'Desktop screenshot of the NE6 five-question decision framework',
         ],
     ],
     'mobile' => [
         [
-            'file'  => 'assets/imgs/ne6-home-mobile.png',
-            'label' => 'Homepage',
-            'alt'   => 'Mobile screenshot of the NE6 homepage',
+            'file'    => 'assets/imgs/ne6-home-mobile.png',
+            'subject' => 'home',
+            'label'   => 'Homepage',
+            'alt'     => 'Mobile screenshot of the NE6 homepage',
         ],
         [
-            'file'  => 'assets/imgs/ne6-blog-mobile.png',
-            'label' => 'NE6 Blog',
-            'alt'   => 'Mobile screenshot of the NE6 blog and article cards',
+            'file'    => 'assets/imgs/ne6-blog-mobile.png',
+            'subject' => 'blog',
+            'label'   => 'NE6 Blog',
+            'alt'     => 'Mobile screenshot of the NE6 blog and article cards',
         ],
         [
-            'file'  => 'assets/imgs/ne6-decision-framework-mobile.png',
-            'label' => 'Decision Framework',
-            'alt'   => 'Mobile screenshot of the NE6 five-question decision framework',
+            'file'    => 'assets/imgs/ne6-decision-framework-mobile.png',
+            'subject' => 'decision-framework',
+            'label'   => 'Decision Framework',
+            'alt'     => 'Mobile screenshot of the NE6 five-question decision framework',
         ],
     ],
 ];
@@ -45,6 +51,10 @@ foreach ( $ne6_gallery as $mode => $screenshots ) {
         )
     );
 }
+
+$ne6_initial_mode = ! empty( $ne6_gallery['desktop'] ) ? 'desktop' : 'mobile';
+$ne6_has_screenshots = ! empty( $ne6_gallery[ $ne6_initial_mode ] );
+
 // NE6-specific technologies. Keep the initial scan compact; details remain available below.
 $ne6_stack = [
     'WordPress',
@@ -110,11 +120,19 @@ $ne6_work_areas = [
     );
     ?>
 
-    <div class="grid items-stretch gap-5 lg:grid-cols-5 lg:grid-rows-[minmax(0,1fr)_auto] lg:gap-x-8 lg:gap-y-4">
+    <div class="grid items-stretch gap-5 lg:grid-cols-5 lg:grid-rows-[auto_1fr_auto] lg:gap-x-8 lg:gap-y-0">
+
+        <div class="flex min-w-0 flex-col gap-2 rounded-lg border border-border bg-white p-4 text-dark sm:p-5 lg:col-span-2 lg:col-start-4 lg:row-start-1 lg:rounded-b-none lg:border-b-0 lg:pb-4">
+            <h3 class="text-2xl font-medium leading-tight md:text-3xl">Production WebOps at NE6</h3>
+            <p class="text-sm leading-6 text-dark/75">
+                I operate and improve NE6's production WordPress website through
+                day-to-day site support, front-end development, and analytics.
+            </p>
+        </div>
 
         <div
             data-ne6-gallery
-            class="order-first flex min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-white text-dark shadow-lg lg:order-none lg:col-span-3 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:min-h-144"
+            class="flex min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-white text-dark shadow-lg lg:col-span-3 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:min-h-144"
         >
 
             <div class="flex items-center gap-4 border-b border-border px-4 py-3" aria-hidden="true">
@@ -124,12 +142,16 @@ $ne6_work_areas = [
                     <span class="size-2.5 rounded-full bg-muted-light"></span>
                 </div>
 
-                <div class="min-w-0 flex-1 rounded-md bg-light px-3 py-1 text-center text-xs text-muted">
+                <div class="min-w-0 flex-1 rounded-md bg-light px-3 py-1 text-center text-xs text-dark/70">
                     llc.ne6.us
                 </div>
             </div>
 
             <div class="relative aspect-4/3 min-h-0 overflow-hidden bg-light sm:aspect-video lg:aspect-auto lg:flex-1">
+
+                <?php if ( ! $ne6_has_screenshots ) : ?>
+                    <p class="absolute inset-0 flex items-center justify-center p-4 text-center text-sm text-dark/70">Screenshots are currently unavailable.</p>
+                <?php endif; ?>
 
                 <?php foreach ( $ne6_gallery as $mode => $screenshots ) : ?>
                     <?php foreach ( $screenshots as $index => $shot ) : ?>
@@ -137,9 +159,9 @@ $ne6_work_areas = [
                         <div
                             data-ne6-slide
                             data-ne6-mode="<?php echo esc_attr( $mode ); ?>"
-                            data-ne6-index="<?php echo esc_attr( $index ); ?>"
+                            data-ne6-subject="<?php echo esc_attr( $shot['subject'] ); ?>"
                             data-ne6-label="<?php echo esc_attr( $shot['label'] ); ?>"
-                            class="absolute inset-0 <?php echo ( 'desktop' === $mode && 0 === $index ) ? '' : 'hidden'; ?>"
+                            class="absolute inset-0 <?php echo ( $ne6_initial_mode === $mode && 0 === $index ) ? '' : 'hidden'; ?>"
                         >
 
                             <?php if ( 'mobile' === $mode ) : ?>
@@ -171,99 +193,104 @@ $ne6_work_areas = [
                     <?php endforeach; ?>
                 <?php endforeach; ?>
 
-                <button
-                    type="button"
-                    data-ne6-previous
-                    aria-label="Previous screenshot"
-                    class="absolute top-1/2 left-3 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-dark bg-dark text-light shadow-sm transition-colors hover:bg-white hover:text-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark disabled:opacity-30 motion-reduce:transition-none"
-                >
-                    <span aria-hidden="true">←</span>
-                </button>
+                <?php if ( $ne6_has_screenshots ) : ?>
+                    <button
+                        type="button"
+                        data-ne6-previous
+                        aria-label="Previous screenshot"
+                        <?php disabled( count( $ne6_gallery[ $ne6_initial_mode ] ) < 2 ); ?>
+                        class="absolute top-1/2 left-3 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-dark bg-dark text-light shadow-sm transition-colors hover:bg-white hover:text-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark disabled:opacity-30 motion-reduce:transition-none"
+                    >
+                        <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M19 12H5m7 7-7-7 7-7" />
+                        </svg>
+                    </button>
 
-                <button
-                    type="button"
-                    data-ne6-next
-                    aria-label="Next screenshot"
-                    class="absolute top-1/2 right-3 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-dark bg-dark text-light shadow-sm transition-colors hover:bg-white hover:text-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark disabled:opacity-30 motion-reduce:transition-none"
-                >
-                    <span aria-hidden="true">→</span>
-                </button>
+                    <button
+                        type="button"
+                        data-ne6-next
+                        aria-label="Next screenshot"
+                        <?php disabled( count( $ne6_gallery[ $ne6_initial_mode ] ) < 2 ); ?>
+                        class="absolute top-1/2 right-3 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-dark bg-dark text-light shadow-sm transition-colors hover:bg-white hover:text-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark disabled:opacity-30 motion-reduce:transition-none"
+                    >
+                        <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14m-7-7 7 7-7 7" />
+                        </svg>
+                    </button>
 
-                <p data-ne6-announcement class="sr-only" aria-live="polite"></p>
+                <?php endif; ?>
 
             </div>
 
-            <div class="flex flex-wrap items-center justify-between gap-3 border-t border-border p-3">
+            <?php if ( $ne6_has_screenshots ) : ?>
+                <div class="flex flex-wrap items-center justify-between gap-3 border-t border-border p-3">
 
-                <div
-                    class="inline-flex items-center gap-1 rounded-md bg-light p-1"
-                    role="group"
-                    aria-label="Screenshot device"
-                >
-
-                    <button
-                        type="button"
-                        data-ne6-view="desktop"
-                        aria-pressed="true"
-                        class="rounded-sm bg-dark px-3 py-2 text-sm text-light focus-visible:outline-2 focus-visible:outline-offset-2"
+                    <div
+                        class="inline-flex items-center gap-1 rounded-md bg-light p-1"
+                        role="group"
+                        aria-label="Screenshot device"
                     >
-                        Desktop
-                    </button>
 
-                    <button
-                        type="button"
-                        data-ne6-view="mobile"
-                        aria-pressed="false"
-                        <?php disabled( empty( $ne6_gallery['mobile'] ) ); ?>
-                        class="rounded-sm px-3 py-2 text-sm text-dark focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-40"
-                    >
-                        Mobile
-                    </button>
+                        <button
+                            type="button"
+                            data-ne6-view="desktop"
+                            aria-pressed="<?php echo 'desktop' === $ne6_initial_mode ? 'true' : 'false'; ?>"
+                            <?php disabled( empty( $ne6_gallery['desktop'] ) ); ?>
+                            class="rounded-sm px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-40 <?php echo 'desktop' === $ne6_initial_mode ? 'bg-dark text-light' : 'text-dark'; ?>"
+                        >
+                            Desktop
+                        </button>
 
-                </div>
+                        <button
+                            type="button"
+                            data-ne6-view="mobile"
+                            aria-pressed="<?php echo 'mobile' === $ne6_initial_mode ? 'true' : 'false'; ?>"
+                            <?php disabled( empty( $ne6_gallery['mobile'] ) ); ?>
+                            class="rounded-sm px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-40 <?php echo 'mobile' === $ne6_initial_mode ? 'bg-dark text-light' : 'text-dark'; ?>"
+                        >
+                            Mobile
+                        </button>
 
-                <div class="flex items-center gap-2">
+                    </div>
 
-                    <?php foreach ( $ne6_gallery as $mode => $screenshots ) : ?>
-                        <?php foreach ( $screenshots as $index => $shot ) : ?>
+                    <div class="flex flex-wrap items-center gap-2">
 
-                            <button
-                                type="button"
-                                data-ne6-thumb
-                                data-ne6-mode="<?php echo esc_attr( $mode ); ?>"
-                                data-ne6-index="<?php echo esc_attr( $index ); ?>"
-                                aria-label="<?php echo esc_attr( 'Show ' . $shot['label'] . ' screenshot' ); ?>"
-                                aria-pressed="<?php echo ( 'desktop' === $mode && 0 === $index ) ? 'true' : 'false'; ?>"
-                                class="size-12 overflow-hidden rounded-md border-2 border-transparent p-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 <?php echo 'mobile' === $mode ? 'hidden' : ''; ?>"
-                            >
-                                <img
-                                    src="<?php echo esc_url( get_theme_file_uri( $shot['file'] ) ); ?>"
-                                    alt=""
-                                    class="h-full w-full rounded-sm object-cover object-top"
-                                    loading="lazy"
+                        <?php foreach ( $ne6_gallery as $mode => $screenshots ) : ?>
+                            <?php foreach ( $screenshots as $index => $shot ) : ?>
+
+                                <button
+                                    type="button"
+                                    data-ne6-thumb
+                                    data-ne6-mode="<?php echo esc_attr( $mode ); ?>"
+                                    data-ne6-subject="<?php echo esc_attr( $shot['subject'] ); ?>"
+                                    aria-label="<?php echo esc_attr( 'Show ' . $shot['label'] . ' screenshot' ); ?>"
+                                    aria-pressed="<?php echo ( $ne6_initial_mode === $mode && 0 === $index ) ? 'true' : 'false'; ?>"
+                                    class="size-12 overflow-hidden rounded-md border-2 p-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 <?php echo ( $ne6_initial_mode === $mode && 0 === $index ) ? 'border-dark' : 'border-transparent'; ?> <?php echo $ne6_initial_mode !== $mode ? 'hidden' : ''; ?>"
                                 >
-                            </button>
+                                    <img
+                                        src="<?php echo esc_url( get_theme_file_uri( $shot['file'] ) ); ?>"
+                                        alt=""
+                                        class="h-full w-full rounded-sm object-cover object-top"
+                                        loading="lazy"
+                                    >
+                                </button>
 
+                            <?php endforeach; ?>
                         <?php endforeach; ?>
-                    <?php endforeach; ?>
+
+                    </div>
+
+                    <p data-ne6-fallback class="hidden w-full text-xs text-dark/75"></p>
+                    <p data-ne6-announcement class="sr-only" aria-live="polite" aria-atomic="true"></p>
 
                 </div>
-
-            </div>
+            <?php endif; ?>
 
         </div>
 
-        <div class="min-w-0 rounded-lg border border-border bg-white p-4 text-dark shadow-sm sm:p-5 lg:col-span-2 lg:col-start-4 lg:row-start-1 lg:h-full">
+        <div class="min-w-0 rounded-lg border border-border bg-white p-4 text-dark shadow-sm sm:p-5 lg:col-span-2 lg:col-start-4 lg:row-start-2 lg:rounded-t-none lg:border-t-0 lg:pt-0 lg:shadow-none">
 
             <div class="flex flex-col gap-4">
-                <div class="flex flex-col gap-2">
-                    <h3 class="text-2xl font-medium leading-tight md:text-3xl">Production WebOps at NE6</h3>
-                    <p class="text-sm leading-6 text-dark/75">
-                        I operate and improve NE6's production WordPress website through
-                        day-to-day site support, front-end development, and analytics.
-                    </p>
-                </div>
-
                 <ul class="flex flex-wrap gap-1.5" aria-label="Technologies used at NE6">
                     <?php foreach ( $ne6_stack as $technology ) : ?>
                         <li class="rounded-sm bg-dark/5 px-2.5 py-1 text-xs font-medium text-dark">
@@ -304,7 +331,7 @@ $ne6_work_areas = [
 
         </div>
 
-        <div class="self-start lg:col-span-2 lg:col-start-4 lg:row-start-2">
+        <div class="self-start lg:col-span-2 lg:col-start-4 lg:row-start-3 lg:mt-4">
             <?php
             get_template_part(
                 'components/button',
@@ -328,38 +355,37 @@ $ne6_work_areas = [
     if (!gallery) return;
 
     const slides = [...gallery.querySelectorAll('[data-ne6-slide]')];
+    if (!slides.length) return;
+
     const thumbnails = [...gallery.querySelectorAll('[data-ne6-thumb]')];
     const deviceButtons = [...gallery.querySelectorAll('[data-ne6-view]')];
-
     const previous = gallery.querySelector('[data-ne6-previous]');
     const next = gallery.querySelector('[data-ne6-next]');
     const announcement = gallery.querySelector('[data-ne6-announcement]');
+    const fallback = gallery.querySelector('[data-ne6-fallback]');
 
-    let mode = 'desktop';
-    let active = 0;
+    let mode = slides[0].dataset.ne6Mode;
+    let subject = slides[0].dataset.ne6Subject;
 
-    function availableSlides() {
-        return slides.filter(slide => slide.dataset.ne6Mode === mode);
+    function availableSlides(device = mode) {
+        return slides.filter(slide => slide.dataset.ne6Mode === device);
     }
 
-    function render() {
-        const currentSlides = availableSlides();
-        if (!currentSlides.length) return;
+    function currentSlide() {
+        return availableSlides().find(slide => slide.dataset.ne6Subject === subject);
+    }
 
-        active = (active + currentSlides.length) % currentSlides.length;
+    function render(message = '', announce = true) {
+        const current = currentSlide();
+        const currentSlides = availableSlides();
 
         slides.forEach(slide => {
-            const selected =
-                slide.dataset.ne6Mode === mode &&
-                Number(slide.dataset.ne6Index) === active;
-
-            slide.classList.toggle('hidden', !selected);
+            slide.classList.toggle('hidden', slide !== current);
         });
 
         thumbnails.forEach(thumb => {
             const sameMode = thumb.dataset.ne6Mode === mode;
-            const selected =
-                sameMode && Number(thumb.dataset.ne6Index) === active;
+            const selected = sameMode && thumb.dataset.ne6Subject === subject;
 
             thumb.classList.toggle('hidden', !sameMode);
             thumb.classList.toggle('border-dark', selected);
@@ -378,49 +404,51 @@ $ne6_work_areas = [
 
         previous.disabled = currentSlides.length < 2;
         next.disabled = currentSlides.length < 2;
-    }
+        fallback.textContent = message;
+        fallback.classList.toggle('hidden', !message);
 
-    function announce() {
-        const current = availableSlides()[active];
-
-        if (current) {
-            announcement.textContent =
-                `${current.dataset.ne6Label}, ${mode} screenshot`;
+        if (announce) {
+            announcement.textContent = message || `${current.dataset.ne6Label}, ${mode} screenshot`;
         }
     }
 
     deviceButtons.forEach(button => {
         button.addEventListener('click', () => {
-            mode = button.dataset.ne6View;
-            active = 0;
+            const targetMode = button.dataset.ne6View;
+            const targetSlides = availableSlides(targetMode);
+            if (targetMode === mode || !targetSlides.length) return;
 
-            render();
-            announce();
+            const oldLabel = currentSlide().dataset.ne6Label;
+            const match = targetSlides.find(slide => slide.dataset.ne6Subject === subject);
+            const target = match || targetSlides[0];
+            mode = targetMode;
+            subject = target.dataset.ne6Subject;
+
+            render(match ? '' : `No ${mode} screenshot for ${oldLabel}. Showing ${target.dataset.ne6Label} instead.`);
         });
     });
 
     thumbnails.forEach(thumb => {
         thumb.addEventListener('click', () => {
             mode = thumb.dataset.ne6Mode;
-            active = Number(thumb.dataset.ne6Index);
-
+            subject = thumb.dataset.ne6Subject;
             render();
-            announce();
         });
     });
 
-    previous.addEventListener('click', () => {
-        active--;
-        render();
-        announce();
-    });
+    function move(direction) {
+        const currentSlides = availableSlides();
+        if (currentSlides.length < 2) return;
 
-    next.addEventListener('click', () => {
-        active++;
+        const index = currentSlides.indexOf(currentSlide());
+        const nextIndex = (index + direction + currentSlides.length) % currentSlides.length;
+        subject = currentSlides[nextIndex].dataset.ne6Subject;
         render();
-        announce();
-    });
+    }
 
-    render();
+    previous.addEventListener('click', () => move(-1));
+    next.addEventListener('click', () => move(1));
+
+    render('', false);
 })();
 </script>

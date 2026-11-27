@@ -1,4 +1,16 @@
 <?php
+// Loaded in the footer; reuse the GSAP handle registered by the marquee.
+$tools_script = '/assets/js/tools.js';
+if ( is_readable( get_theme_file_path( $tools_script ) ) && wp_script_is( 'js-web-gsap', 'registered' ) ) {
+    wp_enqueue_script(
+        'js-web-tools',
+        get_theme_file_uri( $tools_script ),
+        [ 'js-web-gsap' ],
+        filemtime( get_theme_file_path( $tools_script ) ),
+        true
+    );
+}
+
 $capabilities = [
     [
         'title' => 'WordPress & CMS',
@@ -15,7 +27,7 @@ $capabilities = [
         'title' => 'Front-End',
         'skills' => 'HTML · CSS · JavaScript · Tailwind CSS · GSAP · Responsive design',
         'description' => 'I use front-end code to implement responsive designs and build functionality beyond a CMS\'s defaults.',
-        'demo' => 'Code to Website',
+        'demo' => 'Responsive Interfaces',
         'icons' => [
             [ 'type' => 'brand', 'slug' => 'html5' ],
             [ 'type' => 'brand', 'slug' => 'css' ],
@@ -158,17 +170,9 @@ $capabilities = [
 
                         <div class="grid gap-5 md:grid-cols-2 md:items-center">
 
-                            <div
-                                class="flex min-h-48 flex-col items-center justify-center gap-3 rounded-md border border-border bg-border/40 p-4">
-
-                                <span class="text-xs text-dark/65">
-                                    Animation Placeholder
-                                </span>
-
-                                <p class="text-center font-medium">
-                                    <?php echo esc_html( $capability['demo'] ); ?>
-                                </p>
-
+                            <div class="min-w-0 overflow-hidden rounded-md" data-capability-demo="<?php echo esc_attr( $index ); ?>" aria-hidden="true">
+                                <img src="<?php echo esc_url( get_theme_file_uri( '/assets/svg/tools/' . $index . '.svg' ) ); ?>"
+                                    alt="" width="360" height="240" style="display:block;width:100%;height:auto;" decoding="async">
                             </div>
 
                             <div class="flex flex-col gap-3">
@@ -232,6 +236,8 @@ $capabilities = [
                     trigger.setAttribute('aria-expanded', 'true');
                     panel.hidden = false;
                 }
+
+                section.dispatchEvent(new Event('capability:change'));
             });
         });
     })();

@@ -100,6 +100,7 @@ $projects = [
     ],
     [
         'id' => 'portfolio',
+        'site_url' => 'https://julienstaplesweb.com/',
         'title' => 'This Portfolio',
         'subtitle' => 'Custom WordPress website',
         'description' => 'A purpose-built portfolio featuring a custom WordPress theme and interactive components.',
@@ -145,44 +146,69 @@ $active_project = 'language-app';
 
 <section id="projects" aria-labelledby="projects-heading" class="section">
 
-    <?php
-    get_template_part(
-        'components/section-heading',
-        null,
-        [
-            'number' => '02',
-            'title' => 'Portfolio',
-            'id' => 'projects-heading',
-        ]
-    );
-    ?>
+    <div class="flex min-w-0 items-center gap-2">
+        <div class="min-w-0 flex-1">
+            <?php
+            get_template_part(
+                'components/section-heading',
+                null,
+                [
+                    'number' => '02',
+                    'title' => 'Portfolio',
+                    'id' => 'projects-heading',
+                ]
+            );
+            ?>
+        </div>
 
-    <div
-        class="grid grid-cols-2 gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)_minmax(0,1fr)] lg:grid-rows-2 lg:gap-4">
+        <div class="flex shrink-0 items-center gap-2 lg:hidden" role="group" aria-label="Project selector navigation">
+            <button type="button" data-project-scroll="previous" aria-label="Scroll to previous projects"
+                aria-controls="project-selector" aria-disabled="true"
+                class="flex size-12 shrink-0 cursor-pointer items-center justify-center rounded-md border border-light/60 text-light hover:bg-dark-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light aria-disabled:cursor-default aria-disabled:border-transparent aria-disabled:opacity-30 aria-disabled:hover:bg-transparent">
+                <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m15 18-6-6 6-6" />
+                </svg>
+            </button>
+            <button type="button" data-project-scroll="next" aria-label="Scroll to next projects"
+                aria-controls="project-selector" aria-disabled="true"
+                class="flex size-12 shrink-0 cursor-pointer items-center justify-center rounded-md border border-light/60 text-light hover:bg-dark-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light aria-disabled:cursor-default aria-disabled:border-transparent aria-disabled:opacity-30 aria-disabled:hover:bg-transparent">
+                <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m9 18 6-6-6-6" />
+                </svg>
+            </button>
+        </div>
+    </div>
 
-        <?php foreach ( array_slice( $projects, 0, 2 ) as $index => $project ) : ?>
+    <div class="grid min-w-0 gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)_minmax(0,1fr)] lg:grid-rows-2 lg:gap-4">
 
-            <div class="min-w-0 lg:col-start-1
-                <?php echo 0 === $index ? 'lg:row-start-1' : 'lg:row-start-2'; ?>">
+        <div id="project-selector" class="-m-1 flex min-w-0 snap-x snap-mandatory gap-3 overflow-x-auto p-1 scroll-px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:contents">
 
-                <?php
-                get_template_part(
-                    'components/project-card',
-                    null,
-                    [
-                        'project' => $project,
-                        'active' => $project['id'] === $active_project,
-                        'position' => 'before',
-                    ]
-                );
-                ?>
+            <?php foreach ( $projects as $index => $project ) : ?>
 
-            </div>
+                <div class="w-[min(13rem,85%)] min-w-0 shrink-0 snap-start sm:w-[min(15rem,85%)] lg:w-auto
+                    <?php echo $index < 2 ? 'lg:col-start-1' : 'lg:col-start-3'; ?>
+                    <?php echo 0 === $index % 2 ? 'lg:row-start-1' : 'lg:row-start-2'; ?>">
 
-        <?php endforeach; ?>
+                    <?php
+                    get_template_part(
+                        'components/project-card',
+                        null,
+                        [
+                            'project' => $project,
+                            'active' => $project['id'] === $active_project,
+                            'position' => $index < 2 ? 'before' : 'after',
+                        ]
+                    );
+                    ?>
+
+                </div>
+
+            <?php endforeach; ?>
+
+        </div>
 
         <div id="project-spotlight"
-            class="col-span-2 min-w-0 overflow-hidden rounded-lg bg-light text-dark lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+            class="min-w-0 overflow-hidden rounded-lg bg-light text-dark lg:col-start-2 lg:row-span-2 lg:row-start-1">
 
             <?php foreach ( $projects as $project ) : ?>
 
@@ -200,27 +226,6 @@ $active_project = 'language-app';
             <?php endforeach; ?>
 
         </div>
-
-        <?php foreach ( array_slice( $projects, 2, 2 ) as $index => $project ) : ?>
-
-            <div class="min-w-0 lg:col-start-3
-                <?php echo 0 === $index ? 'lg:row-start-1' : 'lg:row-start-2'; ?>">
-
-                <?php
-                get_template_part(
-                    'components/project-card',
-                    null,
-                    [
-                        'project' => $project,
-                        'active' => $project['id'] === $active_project,
-                        'position' => 'after',
-                    ]
-                );
-                ?>
-
-            </div>
-
-        <?php endforeach; ?>
 
     </div>
 
@@ -242,6 +247,40 @@ $active_project = 'language-app';
             ...section.querySelectorAll('[data-project-panel]')
         ];
 
+        const scroller = section.querySelector('#project-selector');
+        const previous = section.querySelector('[data-project-scroll="previous"]');
+        const next = section.querySelector('[data-project-scroll="next"]');
+
+        function updateScrollControls() {
+            const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+
+            previous.setAttribute('aria-disabled', String(scroller.scrollLeft <= 1));
+            next.setAttribute('aria-disabled', String(scroller.scrollLeft >= maxScroll - 1));
+        }
+
+        function scrollProjects(control) {
+            if (control.getAttribute('aria-disabled') === 'true') return;
+
+            const cards = [...scroller.children];
+            const firstLeft = cards[0].getBoundingClientRect().left;
+            const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+            const current = scroller.scrollLeft;
+            const stops = cards.map(card => Math.min(maxScroll, card.getBoundingClientRect().left - firstLeft));
+            const forward = control === next;
+            const target = forward
+                ? stops.find(stop => stop > current + 1) ?? maxScroll
+                : stops.reverse().find(stop => stop < current - 1) ?? 0;
+
+            scroller.scrollTo({
+                left: target,
+                behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
+            });
+        }
+
+        scroller.addEventListener('scroll', updateScrollControls, { passive: true });
+        new ResizeObserver(updateScrollControls).observe(scroller);
+        updateScrollControls();
+
         function selectTab(panel, tabName) {
             panel.querySelectorAll('[data-spotlight-tab]').forEach(button => {
                 const active = button.dataset.spotlightTab === tabName;
@@ -253,6 +292,9 @@ $active_project = 'language-app';
             panel.querySelectorAll('[data-spotlight-content]').forEach(content => {
                 content.hidden = content.dataset.spotlightContent !== tabName;
             });
+
+            const controls = panel.querySelector('[data-preview-controls]');
+            if (controls) controls.hidden = tabName !== 'preview';
         }
 
         function selectDevice(panel, device) {
@@ -272,7 +314,7 @@ $active_project = 'language-app';
                 panel => panel.dataset.projectPanel === projectId
             );
 
-            if (!nextPanel) return;
+            if (!nextPanel || !nextPanel.hidden) return;
 
             selectors.forEach(button => {
                 const active = button.dataset.projectSelector === projectId;
@@ -294,13 +336,23 @@ $active_project = 'language-app';
 
                 const bounds = heading.getBoundingClientRect();
 
-                if (bounds.top < 0 || bounds.bottom > window.innerHeight) {
-                    heading.scrollIntoView({ block: 'center' });
+                const header = document.getElementById('site-header');
+                const visibleTop = header ? Math.max(0, header.getBoundingClientRect().bottom) : 0;
+
+                if (bounds.top < visibleTop || bounds.bottom > window.innerHeight) {
+                    heading.scrollIntoView({ block: 'center', inline: 'nearest' });
                 }
             }
         }
 
         section.addEventListener('click', event => {
+            const scrollControl = event.target.closest('[data-project-scroll]');
+
+            if (scrollControl) {
+                scrollProjects(scrollControl);
+                return;
+            }
+
             const selector = event.target.closest('[data-project-selector]');
 
             if (selector) {

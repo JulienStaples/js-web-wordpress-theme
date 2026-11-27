@@ -79,27 +79,7 @@ $tabs = [
             aria-labelledby="<?php echo esc_attr( $id . '-tab-preview' ); ?>" data-spotlight-content="preview"
             tabindex="0">
 
-            <div class="flex flex-col gap-3">
-
-                <?php if ( $has_mobile_preview ) : ?>
-
-                    <div class="flex justify-end">
-                        <div class="flex gap-1 rounded-md bg-border/60 p-1" role="group" aria-label="Screenshot device">
-
-                            <?php foreach ( [ 'desktop' => 'Desktop', 'mobile' => 'Mobile' ] as $device => $label ) : ?>
-
-                                <button type="button" data-preview-toggle="<?php echo esc_attr( $device ); ?>"
-                                    aria-pressed="<?php echo 'desktop' === $device ? 'true' : 'false'; ?>"
-                                    class="cursor-pointer rounded px-2.5 py-1.5 text-xs text-dark/75 hover:bg-white hover:text-dark aria-pressed:bg-dark aria-pressed:text-light aria-pressed:hover:bg-dark aria-pressed:hover:text-light focus-visible:outline-2 focus-visible:outline-dark">
-                                    <?php echo esc_html( $label ); ?>
-                                </button>
-
-                            <?php endforeach; ?>
-
-                        </div>
-                    </div>
-
-                <?php endif; ?>
+            <div>
 
                 <div class="rounded-lg bg-border/40 p-2 sm:p-3">
 
@@ -119,7 +99,13 @@ $tabs = [
                                     <span class="size-1.5 rounded-full bg-muted-light"></span>
                                     <span class="size-1.5 rounded-full bg-muted-light"></span>
 
-                                    <span class="ml-2 h-2.5 flex-1 rounded-sm bg-border"></span>
+                                    <?php if ( ! empty( $project['site_url'] ) ) : ?>
+                                        <span class="ml-2 min-w-0 flex-1 truncate rounded-sm bg-border px-2 py-0.5 text-center text-xs text-dark/80">
+                                            <?php echo esc_html( wp_parse_url( $project['site_url'], PHP_URL_HOST ) ); ?>
+                                        </span>
+                                    <?php else : ?>
+                                        <span class="ml-2 h-2.5 flex-1 rounded-sm bg-border"></span>
+                                    <?php endif; ?>
 
                                 </div>
 
@@ -147,6 +133,8 @@ $tabs = [
                         </div>
 
                     <?php endforeach; ?>
+
+
 
                 </div>
 
@@ -213,27 +201,51 @@ $tabs = [
             aria-labelledby="<?php echo esc_attr( $id . '-tab-about' ); ?>" data-spotlight-content="about"
             tabindex="0" hidden>
 
-            <p class="max-w-prose py-2 text-base leading-7 text-dark">
+            <p class="py-2 text-sm leading-6 text-dark">
                 <?php echo esc_html( $project['about'] ); ?>
             </p>
 
         </div>
 
-        <?php if ( ! empty( $project['url'] ) ) : ?>
+        <?php if ( ! empty( $project['url'] ) || $has_mobile_preview ) : ?>
 
-            <div class="mt-auto border-t border-border pt-4">
+            <div class="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
 
-                <?php
-                get_template_part(
-                    'components/button',
-                    null,
-                    [
-                        'text'    => $project['link_text'],
-                        'url'     => $project['url'],
-                        'variant' => 'dark',
-                    ]
-                );
-                ?>
+                <?php if ( ! empty( $project['url'] ) ) : ?>
+
+                    <?php
+                    get_template_part(
+                        'components/button',
+                        null,
+                        [
+                            'text'    => $project['link_text'],
+                            'url'     => $project['url'],
+                            'variant' => 'dark',
+                        ]
+                    );
+                    ?>
+
+                <?php endif; ?>
+
+                <?php if ( $has_mobile_preview ) : ?>
+
+                    <div data-preview-controls class="min-w-0">
+                        <div class="inline-flex max-w-full flex-wrap gap-1 rounded-md bg-border/60 p-1" role="group" aria-label="Screenshot device">
+
+                            <?php foreach ( [ 'desktop' => 'Desktop', 'mobile' => 'Mobile' ] as $device => $label ) : ?>
+
+                                <button type="button" data-preview-toggle="<?php echo esc_attr( $device ); ?>"
+                                    aria-pressed="<?php echo 'desktop' === $device ? 'true' : 'false'; ?>"
+                                    class="min-h-11 cursor-pointer rounded px-2.5 py-1.5 text-xs text-dark/75 hover:bg-white hover:text-dark aria-pressed:bg-dark aria-pressed:text-light aria-pressed:hover:bg-dark aria-pressed:hover:text-light focus-visible:outline-2 focus-visible:outline-dark">
+                                    <?php echo esc_html( $label ); ?>
+                                </button>
+
+                            <?php endforeach; ?>
+
+                        </div>
+                    </div>
+
+                <?php endif; ?>
 
             </div>
 

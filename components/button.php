@@ -6,6 +6,7 @@
  * - text:    Visible label.
  * - url:     Destination.
  * - variant: 'light' (light fill), 'dark' (dark fill), or 'outline'.
+ * - document_variant: Optional PDF appearance override (defaults to 'outline').
  *
  * Off-site links and PDFs open in a new tab. Internal links do not.
  * PDF links use the secondary outline appearance by default.
@@ -29,7 +30,7 @@ $is_off_site = ! empty( $destination_host )
     && $normalize_host( $destination_host ) !== $normalize_host( $site_host );
 
 $opens_new_tab = $is_document || $is_off_site;
-$appearance    = $is_document ? 'outline' : $variant;
+$appearance    = $is_document ? ( $args['document_variant'] ?? 'outline' ) : $variant;
 
 $base_classes = 'inline-flex min-h-11 items-center justify-center gap-2.5 rounded-sm border px-4 py-2.5 text-sm font-semibold no-underline transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current motion-reduce:transition-none';
 

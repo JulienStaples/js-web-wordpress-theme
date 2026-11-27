@@ -127,7 +127,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 4rem;
+  scroll-padding-top: var(--site-header-height, 4rem);
 }
 
 @media (prefers-reduced-motion: reduce) {

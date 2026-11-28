@@ -1,6 +1,15 @@
 <?php get_header(); ?>
 
 <style>
+    /* Match the marquee-to-01 gap below 04, before the footer border. */
+    #main-content > #experience {
+        padding-bottom: 4.25rem;
+    }
+    @media (min-width: 64rem) {
+        #main-content > #experience {
+            padding-bottom: 6.25rem;
+        }
+    }
     [data-home-entrance] {
         position: relative;
         isolation: isolate;

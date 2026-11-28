@@ -5,12 +5,10 @@
         position: relative;
         isolation: isolate;
     }
-
     [data-home-entrance] [data-hero-copy] {
         position: relative;
         z-index: 1;
     }
-
     [data-home-entrance] [data-hero-logo] {
         position: absolute;
         inset: 0;
@@ -22,7 +20,6 @@
         pointer-events: none;
         user-select: none;
     }
-
     [data-home-entrance] [data-hero-logo] svg {
         display: block;
         flex: none;
@@ -34,7 +31,6 @@
         opacity: .07;
         transform-origin: center;
     }
-
     @media (min-width: 480px) {
         [data-home-entrance] [data-hero-logo] svg {
             /* Interpolate from the oversized phone crop to the tablet composition. */
@@ -42,7 +38,6 @@
             margin-right: calc(24.583333vw - 338.8px);
         }
     }
-
     @media (min-width: 768px) {
         [data-home-entrance] [data-hero-logo] svg {
             width: min(78.125vw, 1000px);
@@ -52,13 +47,11 @@
             margin-right: calc(max(0px, (100% - var(--container-page, 1280px)) / 2) - min(calc(5.859375vw + 105px), 180px));
         }
     }
-
     @media (min-width: 1024px) {
         [data-home-entrance] [data-hero-logo] svg {
             opacity: .11;
         }
     }
-
     /* The portrait is an overlay, not a layout resize. Keep the shared
        button press/hover rules from scaling its fixed-size trigger. */
     [data-home-entrance] [data-hero-greeting] {
@@ -66,7 +59,6 @@
         z-index: 2;
         overflow: visible;
     }
-
     [data-home-entrance] [data-hero-profile] {
         position: relative;
         display: block;
@@ -83,15 +75,12 @@
         scale: 1 !important;
         transition: none !important;
     }
-
     [data-home-entrance] [data-hero-profile][aria-expanded="true"] {
         cursor: zoom-out;
     }
-
     [data-home-entrance] [data-hero-profile]:disabled {
         cursor: default;
     }
-
     [data-hero-profile] [data-profile-picture] {
         position: absolute;
         top: -66px;
@@ -107,7 +96,6 @@
         will-change: transform;
         transition: transform 120ms ease-out;
     }
-
     [data-hero-profile] [data-profile-picture] img {
         display: block;
         width: 100%;
@@ -117,13 +105,11 @@
         object-fit: cover;
         object-position: 50% 0%;
     }
-
     [data-hero-profile][aria-expanded="true"] [data-profile-picture] {
         transform: translateX(var(--profile-edge-shift, 0px)) scale(1);
         box-shadow: 0 8px 24px #0005, 0 0 0 2px #fff;
-        transition: transform 180ms cubic-bezier(.22, .8, .28, 1.17);
+        transition: transform 180ms cubic-bezier(.22,.8,.28,1.17);
     }
-
     @media (prefers-reduced-motion: reduce) {
         [data-hero-profile] [data-profile-picture] {
             transition: none !important;
@@ -138,11 +124,16 @@
 
             <div data-hero-copy class="flex min-w-0 flex-1 flex-col items-start gap-8 lg:gap-10">
                 <div data-hero-greeting class="inline-flex items-center gap-2 rounded-full bg-dark-surface px-3 py-2">
-                    <button type="button" data-hero-profile aria-label="Enlarge profile picture" aria-expanded="false"
-                        disabled>
+                    <button type="button" data-hero-profile aria-label="Enlarge profile picture" aria-expanded="false" disabled>
                         <span data-profile-picture>
-                            <img src="<?php echo esc_url( get_theme_file_uri( 'assets/imgs/me.png' ) ); ?>" alt=""
-                                width="393" height="540" loading="eager" decoding="async">
+                            <img
+                                src="<?php echo esc_url( get_theme_file_uri( 'assets/imgs/me.png' ) ); ?>"
+                                alt=""
+                                width="393"
+                                height="540"
+                                loading="eager"
+                                decoding="async"
+                            >
                         </span>
                     </button>
 
@@ -158,8 +149,7 @@
                     </h1>
 
                     <p class="max-w-[64ch] text-base leading-6 text-muted-light">
-                        My work touches every part of the website, from planning and content to maintenance and
-                        analytics.
+                        My work touches every part of the website, from planning and content to maintenance and analytics.
                     </p>
                 </div>
 
@@ -177,19 +167,16 @@
             </div>
 
             <!-- Preserve the desktop hero layout independently of the decorative watermark. -->
-            <div aria-hidden="true"
-                class="hidden shrink-0 md:block md:h-[305px] md:w-[245px] lg:h-[455px] lg:w-[390px]"></div>
+            <div aria-hidden="true" class="hidden shrink-0 md:block md:h-[305px] md:w-[245px] lg:h-[455px] lg:w-[390px]"></div>
 
             <div data-hero-logo aria-hidden="true">
-                <svg viewBox="0 0 9.8659888 9.8659876" focusable="false">
-                    <g transform="matrix(0.0140242,0,0,0.0140242,-101.09697,34.90019)" fill="none" stroke="#fff"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <circle data-logo-ring cx="7560.5" cy="-3197.834" r="336.24872" stroke-width="31"
-                            transform="translate(0,1061.0137)" />
-                        <path data-logo-signature stroke-width="22.8177" transform="translate(0,1061.0137)"
-                            d="m 7501.5549,-3273.9959 c 1.5367,30.1999 -28.3243,59.8021 -42.0218,66.1313 -27.2715,12.6016 -61.3519,-1.3103 -48.1856,-34.2645 11.1316,-27.8609 41.2865,-49.4973 62.146,-69.4312 26.1228,-24.9643 53.7863,-51.5502 73.4037,-82.055 9.3675,-14.5667 20.2739,-28.0391 24.5004,-44.9753 1.7664,-7.0783 3.8791,-19.2575 2.5194,-10.845 -1.0279,6.3597 -1.8009,9.8308 -2.7022,16.1455 -1.5462,10.8338 -4.7975,21.3151 -7.205,32.0102 -15.0606,66.9077 -22.1473,135.0311 -36.4772,201.9815 -15.3085,71.5263 -42.7681,150.6167 -99.9731,200.178 -10.1788,8.8192 -28.1665,19.6732 -41.4301,10.8206 -38.1775,-25.481 -12.2356,-76.905 11.7082,-102.7944 40.1243,-43.384 101.0911,-49.1397 154.0132,-67.1767 66.3432,-22.611 131.5892,-57.812 166.6223,-121.2789 13.1524,-23.8271 26.2378,-80.0802 -0.4505,-100.9908 -32.4841,-25.452 -91.5577,54.937 -94.1189,82.5057 -6.2536,67.2986 64.0159,110.8744 70.2511,168.6184 7.0419,65.2106 -40.7584,127.0562 -106.2775,135.2556 -14.2224,1.7796 -31.2373,1.658 -44.5824,-4.5085 -57.9665,-26.7846 9.7573,-118.7885 71.152,-110.0079 15.8011,2.26 33.499,13.0509 47.735,19.8374 49.3715,23.5377 94.8377,46.8947 151.3109,36.0684 19.7995,-3.7961 44.1189,-9.0038 58.993,-23.8951" />
-                    </g>
-                </svg>
+                    <svg viewBox="0 0 9.8659888 9.8659876" focusable="false">
+                        <g transform="matrix(0.0140242,0,0,0.0140242,-101.09697,34.90019)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+                            <circle data-logo-ring cx="7560.5" cy="-3197.834" r="336.24872" stroke-width="31" transform="translate(0,1061.0137)" />
+                            <path data-logo-signature stroke-width="22.8177" transform="translate(0,1061.0137)"
+                                d="m 7501.5549,-3273.9959 c 1.5367,30.1999 -28.3243,59.8021 -42.0218,66.1313 -27.2715,12.6016 -61.3519,-1.3103 -48.1856,-34.2645 11.1316,-27.8609 41.2865,-49.4973 62.146,-69.4312 26.1228,-24.9643 53.7863,-51.5502 73.4037,-82.055 9.3675,-14.5667 20.2739,-28.0391 24.5004,-44.9753 1.7664,-7.0783 3.8791,-19.2575 2.5194,-10.845 -1.0279,6.3597 -1.8009,9.8308 -2.7022,16.1455 -1.5462,10.8338 -4.7975,21.3151 -7.205,32.0102 -15.0606,66.9077 -22.1473,135.0311 -36.4772,201.9815 -15.3085,71.5263 -42.7681,150.6167 -99.9731,200.178 -10.1788,8.8192 -28.1665,19.6732 -41.4301,10.8206 -38.1775,-25.481 -12.2356,-76.905 11.7082,-102.7944 40.1243,-43.384 101.0911,-49.1397 154.0132,-67.1767 66.3432,-22.611 131.5892,-57.812 166.6223,-121.2789 13.1524,-23.8271 26.2378,-80.0802 -0.4505,-100.9908 -32.4841,-25.452 -91.5577,54.937 -94.1189,82.5057 -6.2536,67.2986 64.0159,110.8744 70.2511,168.6184 7.0419,65.2106 -40.7584,127.0562 -106.2775,135.2556 -14.2224,1.7796 -31.2373,1.658 -44.5824,-4.5085 -57.9665,-26.7846 9.7573,-118.7885 71.152,-110.0079 15.8011,2.26 33.499,13.0509 47.735,19.8374 49.3715,23.5377 94.8377,46.8947 151.3109,36.0684 19.7995,-3.7961 44.1189,-9.0038 58.993,-23.8951" />
+                        </g>
+                    </svg>
             </div>
         </div>
     </section>
@@ -212,7 +199,7 @@
             const copy = hero.querySelector('[data-hero-copy]');
             const animations = [];
             let active = true;
-            let restoreLogo = () => { };
+            let restoreLogo = () => {};
 
             function cleanup() {
                 if (!active) return;
@@ -436,7 +423,7 @@
                 groups.set(intro, [intro, details]);
             }
             add(ne6, [ne6?.querySelector('.homepage-section-heading'),
-            ...ne6Items.filter(element => !(groups.has(intro) && element === details))]);
+                ...ne6Items.filter(element => !(groups.has(intro) && element === details))]);
 
             const projects = document.getElementById('projects');
             const selector = projects?.querySelector('#project-selector');
@@ -472,7 +459,7 @@
                 observer.unobserve(element);
                 if (!section || stopped) return;
                 const animations = [];
-                active.set(element, { section, animations });
+                active.set(element, {section, animations});
                 try {
                     // The paired NE6 surfaces share exactly the same timing and translation.
                     // Individual translate preserves hover/press transform and scale rules.
@@ -592,5 +579,7 @@
         if (navigation?.type !== 'back_forward' && !location.hash) init();
     })();
 </script>
+
+<?php get_template_part( 'components/homepage/screenshot-viewer' ); ?>
 
 <?php get_footer(); ?>

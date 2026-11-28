@@ -1,5 +1,59 @@
 <?php get_header(); ?>
 
+<style>
+    [data-home-entrance] {
+        position: relative;
+        isolation: isolate;
+    }
+    [data-home-entrance] [data-hero-copy] {
+        position: relative;
+        z-index: 1;
+    }
+    [data-home-entrance] [data-hero-logo] {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        overflow: hidden;
+        pointer-events: none;
+        user-select: none;
+    }
+    [data-home-entrance] [data-hero-logo] svg {
+        display: block;
+        flex: none;
+        width: max(320px, 100vw);
+        height: auto;
+        max-width: none;
+        max-height: none;
+        margin-right: calc(-46vw);
+        opacity: .07;
+        transform-origin: center;
+    }
+    @media (min-width: 480px) {
+        [data-home-entrance] [data-hero-logo] svg {
+            /* Interpolate from the oversized phone crop to the tablet composition. */
+            width: calc(41.666667vw + 280px);
+            margin-right: calc(24.583333vw - 338.8px);
+        }
+    }
+    @media (min-width: 768px) {
+        [data-home-entrance] [data-hero-logo] svg {
+            width: min(78.125vw, 1000px);
+            /* Anchor to the same centered 1280px content width as .section.
+               Keep the full hero as the clipping boundary so no hard edge
+               appears inside the background on ultrawide screens. */
+            margin-right: calc(max(0px, (100% - var(--container-page, 1280px)) / 2) - min(calc(5.859375vw + 105px), 180px));
+        }
+    }
+    @media (min-width: 1024px) {
+        [data-home-entrance] [data-hero-logo] svg {
+            opacity: .11;
+        }
+    }
+</style>
+
 <main id="main-content" tabindex="-1">
 
     <section data-home-entrance>
@@ -48,20 +102,17 @@
                 ?>
             </div>
 
-            <div data-hero-portrait
-                class="hidden shrink-0 overflow-hidden rounded-lg bg-[#454545] md:block md:h-[305px] md:w-[245px] lg:h-[455px] lg:w-[390px]">
-                <?php
-                echo wp_get_attachment_image(
-                    14,
-                    'full',
-                    false,
-                    [
-                        'class' => 'h-full w-full object-cover',
-                        'loading' => 'eager',
-                        'fetchpriority' => 'high',
-                    ]
-                );
-                ?>
+            <!-- Preserve the desktop hero layout independently of the decorative watermark. -->
+            <div aria-hidden="true" class="hidden shrink-0 md:block md:h-[305px] md:w-[245px] lg:h-[455px] lg:w-[390px]"></div>
+
+            <div data-hero-logo aria-hidden="true">
+                    <svg viewBox="0 0 9.8659888 9.8659876" focusable="false">
+                        <g transform="matrix(0.0140242,0,0,0.0140242,-101.09697,34.90019)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+                            <circle data-logo-ring cx="7560.5" cy="-3197.834" r="336.24872" stroke-width="31" transform="translate(0,1061.0137)" />
+                            <path data-logo-signature stroke-width="22.8177" transform="translate(0,1061.0137)"
+                                d="m 7501.5549,-3273.9959 c 1.5367,30.1999 -28.3243,59.8021 -42.0218,66.1313 -27.2715,12.6016 -61.3519,-1.3103 -48.1856,-34.2645 11.1316,-27.8609 41.2865,-49.4973 62.146,-69.4312 26.1228,-24.9643 53.7863,-51.5502 73.4037,-82.055 9.3675,-14.5667 20.2739,-28.0391 24.5004,-44.9753 1.7664,-7.0783 3.8791,-19.2575 2.5194,-10.845 -1.0279,6.3597 -1.8009,9.8308 -2.7022,16.1455 -1.5462,10.8338 -4.7975,21.3151 -7.205,32.0102 -15.0606,66.9077 -22.1473,135.0311 -36.4772,201.9815 -15.3085,71.5263 -42.7681,150.6167 -99.9731,200.178 -10.1788,8.8192 -28.1665,19.6732 -41.4301,10.8206 -38.1775,-25.481 -12.2356,-76.905 11.7082,-102.7944 40.1243,-43.384 101.0911,-49.1397 154.0132,-67.1767 66.3432,-22.611 131.5892,-57.812 166.6223,-121.2789 13.1524,-23.8271 26.2378,-80.0802 -0.4505,-100.9908 -32.4841,-25.452 -91.5577,54.937 -94.1189,82.5057 -6.2536,67.2986 64.0159,110.8744 70.2511,168.6184 7.0419,65.2106 -40.7584,127.0562 -106.2775,135.2556 -14.2224,1.7796 -31.2373,1.658 -44.5824,-4.5085 -57.9665,-26.7846 9.7573,-118.7885 71.152,-110.0079 15.8011,2.26 33.499,13.0509 47.735,19.8374 49.3715,23.5377 94.8377,46.8947 151.3109,36.0684 19.7995,-3.7961 44.1189,-9.0038 58.993,-23.8951" />
+                        </g>
+                    </svg>
             </div>
         </div>
     </section>
@@ -84,6 +135,7 @@
             const copy = hero.querySelector('[data-hero-copy]');
             const animations = [];
             let active = true;
+            let restoreLogo = () => {};
 
             function cleanup() {
                 if (!active) return;
@@ -95,6 +147,7 @@
                 motion.removeEventListener?.('change', onMotion);
                 // No persistent animation styles: the unanimated markup is the final state.
                 animations.forEach(animation => animation.cancel());
+                restoreLogo();
             }
             function onScroll() {
                 if (Math.abs(window.scrollY) > 8) cleanup();
@@ -115,6 +168,70 @@
                 ], { duration: time * .85, delay, easing: 'ease-out', fill: 'backwards' }));
             }
 
+            // Decorative watermark: each freshly drawn portion develops opacity
+            // over 700ms. Composite the temporary white strokes inside the same
+            // SVG so its responsive 7% / 11% opacity remains the maximum.
+            function drawLogo() {
+                const container = hero.querySelector('[data-hero-logo]');
+                if (!container || !container.getClientRects().length) return;
+                const logo = container.querySelector('svg');
+                const original = logo.querySelector('g');
+                if (!original) return;
+                const paths = Array.from(original.querySelectorAll('[data-logo-ring], [data-logo-signature]'));
+                if (paths.length !== 2) return;
+                const lengths = paths.map(path => path.getTotalLength());
+                const drawDuration = 1700;
+                const signatureDelay = 700;
+                const dryingDuration = 700;
+                const drawEase = 'cubic-bezier(.333333,0,.666667,1)';
+                const count = 32;
+                const layers = [];
+                const originalDisplay = original.style.display;
+                restoreLogo = () => {
+                    layers.forEach(layer => layer.remove());
+                    original.style.display = originalDisplay;
+                };
+
+                const fragment = document.createDocumentFragment();
+                for (let i = 0; i < count; i++) {
+                    const layer = original.cloneNode(true);
+                    // Source-over alpha: the first k layers combine to k/count,
+                    // so the developing stroke stays below its final opacity.
+                    layer.setAttribute('opacity', String(1 / (count - i)));
+                    layer.setAttribute('data-logo-ink-layer', '');
+                    const copies = Array.from(layer.children);
+                    copies.forEach((path, j) => {
+                        path.removeAttribute('data-logo-ring');
+                        path.removeAttribute('data-logo-signature');
+                        const length = lengths[j];
+                        path.style.strokeDasharray = `${length} ${length}`;
+                        path.style.strokeDashoffset = String(length);
+                        path.style.opacity = '0';
+                    });
+                    fragment.appendChild(layer);
+                    layers.push(layer);
+                }
+                logo.appendChild(fragment);
+                original.style.display = 'none';
+
+                layers.forEach((layer, i) => {
+                    const age = dryingDuration * (i + 1) / count;
+                    Array.from(layer.children).forEach((path, j) => {
+                        const length = lengths[j];
+                        animations.push(path.animate([
+                            { strokeDashoffset: String(length), opacity: 0 },
+                            { strokeDashoffset: String(length), opacity: 1, offset: .001 },
+                            { strokeDashoffset: '0', opacity: 1 }
+                        ], {
+                            duration: drawDuration,
+                            delay: age + (j === 1 ? signatureDelay : 0),
+                            easing: drawEase,
+                            fill: 'both'
+                        }));
+                    });
+                });
+            }
+
             // Run immediately after the hero is parsed, rather than waiting for images.
             // Header and marquee own their own motion and are never targeted here.
             try {
@@ -127,7 +244,7 @@
                 enter(copy?.querySelector('h1'), 'translateY(16px)', stagger, duration);
                 enter(copy?.querySelector('h1 + p'), 'translateY(14px)', stagger * 2, duration);
                 enter(copy?.querySelector(':scope > a'), 'translateY(10px) scale(.96)', stagger * 3, duration);
-                enter(hero.querySelector('[data-hero-portrait]'), 'translateX(16px) scale(.975)', stagger, duration * 1.15);
+                drawLogo();
                 Promise.allSettled(animations.map(animation => animation.finished)).then(cleanup);
             } catch (error) {
                 cleanup();

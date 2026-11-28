@@ -162,6 +162,40 @@ html {
   color: var(--color-dark);
 }
 
+
+#site-header .site-brand {
+  color: rgba(247, 247, 247, 0.96);
+  transform-origin: left center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #site-header .site-brand:hover {
+    color: var(--color-light);
+  }
+
+  #site-header .site-brand:hover .site-brand-wordmark {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+#site-header .site-brand-wordmark {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+#site-header .site-brand-mark {
+  opacity: 0.96;
+}
+
+@media (min-width: 40rem) {
+  #site-header .site-brand-wordmark {
+    font-size: 1rem;
+  }
+}
+
 @media (width < 40rem) {
   #site-header nav > a {
     padding-inline: 0.5rem;
